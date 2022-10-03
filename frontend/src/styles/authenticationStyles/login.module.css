@@ -1,0 +1,35 @@
+
+
+
+.title
+{
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.fields
+{
+  margin: 20px 0px;
+}
+
+.login-card
+{
+    width: 100%;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 6px; */
+    border: 0px;
+}
+.login-btn{
+    height: 2.6em;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #FC575E;
+    border: 0px;
+    color: white;
+    margin:15px 0px;
+}
+
+.logout-btn-icon {
+    margin-left: 4px;
+    margin-bottom: 1px;
+}

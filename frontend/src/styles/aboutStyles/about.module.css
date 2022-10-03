@@ -1,0 +1,144 @@
+.about
+{
+    /* background-color: yellow;
+     */
+    padding-top: 20px;
+}
+
+.title
+{
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.para
+{
+    font-size: 18px;
+    width: 80%;
+    text-align: center;
+    padding: 10px 20px;
+
+}
+
+.banner
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+
+.button
+{
+    color: white;
+    background-color: #FC575E;
+    margin: 20px;
+    font-size: 20px;
+    width: 180px;
+    padding: 10px 20px;
+}
+.button:hover
+{
+    color: white;
+    background-color: #FC575E;
+}
+
+.button-outline
+{
+    color: #FC575E;
+    background-color: white;
+    border: 2px solid #FC575E;
+    font-size: 20px;
+    width: 180px;
+    padding: 10px 20px;
+    margin: 20px;
+}
+
+.button-outline:hover
+{
+    color: white;
+    background-color: #FC575E;
+
+}
+
+
+.boxes
+{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.box
+{
+    min-height: 330px;
+    width: 280px;
+    margin: 10px 30px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 6px;
+}
+
+#box1headerimage
+{
+    background-image: url(../../images/map.png);
+    width: 100%;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#box2headerimage
+{
+    background-image: url(../../images/search.png);
+    width: 100%;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+}
+
+
+#box3headerimage
+{
+    background-image: url(../../images/bookmark.png);
+    width: 100%;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.boxcontent
+{
+    padding: 0px 20px;
+    padding-bottom: 18px;
+    text-align: center;
+}
+
+
+.box-title
+{
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.box-para
+{
+    font-size: 14px;
+}

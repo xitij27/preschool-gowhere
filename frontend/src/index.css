@@ -11,3 +11,50 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* styles */ 
+
+.navbar
+{
+  width: 100%;
+  height: 70px;
+  background-color: #FC575E;
+}
+
+.logofont
+{
+  font-size: 28px;
+  color: #FC575E;
+  font-family: 'Fenix', serif;
+  margin-left:80px;
+  width: 100%;
+
+}
+
+/* for all auth pages styling */
+.authentication-card 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    position: relative;
+
+}
+
+.side-image
+{
+  width: 50%;
+  background-image: url("/src/images/preschoolBg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+.side-image-background
+{
+    background: linear-gradient(to bottom right, rgba(253, 111, 45, 1), rgba(248, 58, 94, 1));
+	  opacity: 0.6;
+    height: 100vh;
+} 
