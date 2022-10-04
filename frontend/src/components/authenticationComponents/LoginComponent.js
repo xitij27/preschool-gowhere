@@ -36,7 +36,10 @@ const LoginComponent = () => {
     e.preventDefault();
     setError("");
 
-    //proceed to do form validation here before calling api
+    //proceed to do form validation 
+
+
+    //authenticate user details with backend and get a uid
 
     //if login authentication succeeds, show success modal
     successAlert("Login Success", "Succesfully logged in! Redirecting to home page");
@@ -53,7 +56,7 @@ const LoginComponent = () => {
                 Please enter your details
               </p>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Group id="email" className={styles.fields}>
                   <Form.Label><p className={styles.title}>Email</p></Form.Label>
                   <Form.Control type="email" required ref={emailRef} />
@@ -64,7 +67,7 @@ const LoginComponent = () => {
                 </Form.Group>
                 <p style = {link}>Forgot password</p>
                 <button
-                  onClick={handleSubmit}
+                
                   disabled={loading}
                   type="submit"
                   className={"w-100 mt-1" + " " + styles["login-btn"]}
