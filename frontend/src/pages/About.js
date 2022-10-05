@@ -4,10 +4,13 @@ import React from 'react'
 // import css styles
 import styles from "../styles/aboutStyles/about.module.css";
 
+//import components
+import NavigationBar from '../components/NavigationBar';
+
 const About = () => {
   return (
     <div>
-        <div className='navbar'></div>
+        <NavigationBar id ="navbar"/>
         <div className={styles.about}>
             <div className={styles.banner}>
                 <div className={styles.title}>Searching for a preschool has never been easier!</div>
