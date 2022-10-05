@@ -15,10 +15,9 @@ const NavigationBar = () => {
 
     <Navbar style ={{backgroundColor: "#FC575E" , paddingTop:"10px", paddingBottom: "10px", paddingLeft: "20px", paddingRight: "40px"}} expand="lg">
         <Container>
-          <Navbar.Brand className='logofont-navbar' style ={{ textDecoration: "none", fontWeight: "600", color:  "white", fontSize: "24px"}}>PreSchool GoWhere</Navbar.Brand>
+          <Navbar.Brand className='logofont-navbar' style ={{ textDecoration: "none", fontWeight: "600", color:  "white", fontSize: "24px", marginRight: "45px"}}>PreSchool GoWhere</Navbar.Brand>
           
           <Navbar.Toggle aria-controls="navbarScroll"/>
-            <div >
               <Navbar.Collapse id="navbarScroll" >
                 <Nav
 
@@ -34,7 +33,6 @@ const NavigationBar = () => {
                 
               </Navbar.Collapse>
 
-            </div>
         </Container>
     </Navbar>
   
