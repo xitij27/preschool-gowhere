@@ -1,0 +1,31 @@
+create or replace function SecondLanguage(second_lang text)
+  returns setof text
+  language plpgsql
+  as
+$$
+begin
+if (second_lang = 'Chinese') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Chinese" = true;
+elsif (second_lang = 'Malay') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Malay" = true;
+elsif (second_lang = 'Tamil') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Tamil" = true;
+elsif (second_lang = 'French') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_French" = true;
+elsif (second_lang = 'Arabic') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Arabic" = true;
+elsif (second_lang = 'Russian') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Russian" = true;
+elsif (second_lang = 'German') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_German" = true;
+elsif (second_lang = 'Japanese') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Japanese" = true;
+elsif (second_lang = 'Hindi') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Hindi" = true;
+elsif (second_lang = 'Korean') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Korean" = true;
+elsif (second_lang = 'Punjabi') then
+  return query select distinct(centre_code) from "PreSchool" as f where "Lang_Punjabi" = true;
+end if;
+end;
+$$;
