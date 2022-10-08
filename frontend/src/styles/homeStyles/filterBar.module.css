@@ -1,0 +1,47 @@
+.filterbar
+{
+    padding: 20px 25px;
+    width: 320px;
+
+}
+
+.dropdowntbn
+{
+    background-color: #FC575E;
+}
+
+
+.title
+{
+    font-size: 34px;
+    font-weight: 600;
+    color: #FC575E;
+}
+
+.para
+{
+    font-size: 18px;
+    margin-top: 0px;
+    color: black;
+}
+
+.slider
+{
+    width: 90%;
+    margin-bottom: 15px;
+    /* background-color: rebeccapurple; */
+}
+
+.criteria
+{
+    width: 100%;
+    /* background-color: rebeccapurple; */
+}
+
+.criteriaTitle
+{
+    color: #FC575E;
+    font-size: 21px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
