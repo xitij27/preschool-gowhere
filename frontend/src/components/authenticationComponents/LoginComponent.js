@@ -12,15 +12,21 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 // import css styles
 import styles from "../../styles/authenticationStyles/login.module.css";
 
-
-
+//Testing with dummy data
+import {users} from  "../../dummyData/userData" ;
 
 const LoginComponent = () => {
 
+
+  //state variables
   const emailRef = useRef();
   const passwordRef = useRef();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  //navigate
+  const navigate = useNavigate();
+
 
   //custom styling objects
   const link = 
@@ -36,13 +42,31 @@ const LoginComponent = () => {
     e.preventDefault();
     setError("");
 
-    //proceed to do form validation 
+    //Proceed to do more input validation 
 
 
-    //authenticate user details with backend and get a uid
+    //Authenticate user details with backend 
+    
 
-    //if login authentication succeeds, show success modal
-    successAlert("Login Success", "Succesfully logged in! Redirecting to home page");
+    //Testing with dummy data
+    const emailInput = emailRef.current.value;
+    const passwordInput = passwordRef.current.value;
+
+    if (emailInput == users[0].email && passwordInput == users[0].password)
+    {
+      console.log("successfully authenticated");
+      successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
+      await sleep(2000);
+      navigate("/home");
+
+    }
+    else
+    {
+      failedAlert("Log in unsuccessful!", "Please retry again!") 
+    }
+
+    //if login authentication succeeds, set authContext user's status as authenticated. Show success popup
+    //successAlert("Login Success", "Succesfully logged in! Redirecting to home page");
   }
 
 
@@ -89,6 +113,10 @@ const LoginComponent = () => {
        
     </div>
   )
+}
+
+const sleep = (milliseconds) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
 
 export default LoginComponent

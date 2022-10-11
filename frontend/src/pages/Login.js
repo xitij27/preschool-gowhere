@@ -15,17 +15,20 @@ const Login = () => {
 
 
   return (
-    <div style={loginPage}>
-        <div className = "authentication-card">
-            <div style={{position: "absolute", top: "25px","zIndex": 10}} className ="logofont">PreSchool <br></br> GoWhere</div>
-            {/* <div className = "logofont">PreSchool </div>
-            <div className = "logofont">GoWhere </div> */}
-            <LoginComponent />
-        </div>
-        <div className='side-image'>
-            <div className='side-image-background'></div>
-        </div>
-    </div>
+    <>
+      <div style={loginPage}>
+
+          <div className = "authentication-card">
+              <div style={{position: "absolute", top: "25px","zIndex": 10}} className ="logofont">PreSchool <br></br> GoWhere</div>
+              {/* <div className = "logofont">PreSchool </div>
+              <div className = "logofont">GoWhere </div> */}
+              <LoginComponent />
+          </div>
+          <div className='side-image'>
+              <div className='side-image-background'></div>
+          </div>
+      </div>
+    </>
   )
 }
 
