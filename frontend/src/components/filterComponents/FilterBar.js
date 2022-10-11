@@ -12,11 +12,14 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 //icons import
 import { AiFillCloseCircle } from "react-icons/ai";
 
+//import utilities/criterias
 
+import {criterias} from "../../utilities/criterias"
 
 //bootstrap imports
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
+import { Button, DropdownButton } from "react-bootstrap";
 
 
 
@@ -28,13 +31,38 @@ const dropdownbtn =
     paddingBottom: "8px",
     minWidth: "250px",
     borderRadius:  "3px",
+    maxWidth: "250px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
 }
 
 
 const FilterBar = () => {
 
-    const [location,setLocation] = useState(25);
-    const [fees,setFees] = useState(2500);
+
+    //criterias
+    const [location,setLocation] = useState(50);
+    const [fees,setFees] = useState(5000);
+    const [foodInput,setFoodInput] = useState();
+    const [second_langInput,setSecond_langInput] = useState(null);
+    const [sparkInput,setSparkInput] = useState(null);
+    const [transportInput,setTransportInput] = useState(null)
+
+
+    //variables for dropdown titles (for display purposes)
+    const [foodTitle,setFoodTitle] = useState("Select food type");
+    const [secondlangTitle,setSecondlangTitle] = useState("Choose Second Language");
+    const [sparkTitle,setSparkTitle] = useState("Availability");
+    const [transportTitle,setTransportTitle] = useState("Availability");
+
+
+
+
+    const handleFilter =()=>
+    {
+        console.log(second_langInput)
+        console.log(foodInput)
+    }
 
 
   return (
@@ -69,38 +97,48 @@ const FilterBar = () => {
 
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Second Language Offered</div>
-            <Dropdown className={styles.dropdownbtn}>
+            <Dropdown className={styles.dropdownbtn} >
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
-                    <div style={{display: "inline-block", marginRight: "15px"}}>Choose second language</div>
+                    <div style={{display: "inline-block", marginRight: "15px"}}>{secondlangTitle}</div>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu  className={styles.dropdownmenu} >
-                    <Dropdown.Item >Chinese</Dropdown.Item>
-                    <Dropdown.Item >Arab</Dropdown.Item>
-                    <Dropdown.Item >Bahasa Indonesia</Dropdown.Item>
+                <Dropdown.Menu className={styles.dropdownmenu} >
+                    {criterias["second_lang"].map((lang)=>{
+                        return <Dropdown.Item onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
+
+                    })}
                 </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> 
+            
+            
+            {/* <DropdownButton variant= "dark" title = {secondlangTitle} onSelect={(e)=> {setSecond_langInput(e);setSecondlangTitle(e)}}>
+                {criterias["second_lang"].map((lang)=>{
+                        return <Dropdown.Item eventKey={lang}>{lang}</Dropdown.Item>
+                    })}
+            </DropdownButton> */}
         </div>
 
 
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Food</div>
-            <Dropdown className={styles.dropdownbtn}>
+            <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
-                    <div style={{display: "inline-block", marginRight: "15px"}}>Select food type</div>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{foodTitle}</div>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu  className={styles.dropdownmenu} >
-                    <Dropdown.Item >Halal</Dropdown.Item>
-                    <Dropdown.Item >Vagetarian</Dropdown.Item>
-                    <Dropdown.Item >Non-Halal</Dropdown.Item>
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setFoodInput(e)} >
+                    
+                    {criterias["food"].map((food)=>{
+                        return <Dropdown.Item onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
+
+                    })}
                 </Dropdown.Menu>
             </Dropdown>
         </div>
 
 
         <div className={styles.criteria}>
-            <div className={styles.criteriaTitle}>Transportation Services</div>
+            <div className={styles.criteriaTitle}>Provision of Transport</div>
             <Dropdown className={styles.dropdownbtn}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
                     <div style={{display: "inline-block", marginRight: "15px"}}>Availability</div>
@@ -108,14 +146,14 @@ const FilterBar = () => {
 
                 <Dropdown.Menu  className={styles.dropdownmenu} >
                     <Dropdown.Item >Yes</Dropdown.Item>
-                    <Dropdown.Item >No</Dropdown.Item>
+                    <Dropdown.Item >Default (no preference) </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </div>
 
 
         <div className={styles.criteria}>
-            <div className={styles.criteriaTitle}>Extend Operating Hours</div>
+            <div className={styles.criteriaTitle}>Extended Operating Hours</div>
             <Dropdown className={styles.dropdownbtn}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
                     <div style={{display: "inline-block", marginRight: "15px"}}> Availability</div>
@@ -123,15 +161,27 @@ const FilterBar = () => {
 
                 <Dropdown.Menu  className={styles.dropdownmenu} >
                     <Dropdown.Item >Yes</Dropdown.Item>
-                    <Dropdown.Item >No</Dropdown.Item>
+                    <Dropdown.Item >Default (no preference) </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </div>
 
+        <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Spark Certified</div>
+            <Dropdown className={styles.dropdownbtn}>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px"}}> Availability</div>
+                </Dropdown.Toggle>
 
+                <Dropdown.Menu  className={styles.dropdownmenu} >
+                    <Dropdown.Item >Yes</Dropdown.Item>
+                    <Dropdown.Item >Default (no preference) </Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+        
 
-
-
+        <Button onClick={handleFilter}>Filter</Button>
 
 
 

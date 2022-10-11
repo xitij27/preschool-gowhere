@@ -13,7 +13,7 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 import styles from "../../styles/authenticationStyles/login.module.css";
 
 //Testing with dummy data
-import {users} from  "../../dummyData/userData" ;
+import {users} from  "../../utilities/userData" ;
 
 const LoginComponent = () => {
 
