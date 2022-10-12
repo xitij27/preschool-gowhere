@@ -1,0 +1,39 @@
+.google-maps
+{
+    background-image:url("../../images/mapBg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.blur-modal
+{
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0 ,0, 0.7);
+  margin: 0px;
+  position:fixed;
+  
+}
+
+
+.expandFilter:hover
+{
+    cursor: pointer;
+}
+
+.filter
+{
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}

@@ -14,6 +14,14 @@ code {
 
 /* styles */ 
 
+.close
+{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 20;
+}
+
 .close:hover
 {
   cursor: pointer;
