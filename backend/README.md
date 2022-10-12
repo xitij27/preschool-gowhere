@@ -47,8 +47,49 @@ This is a list containing the parameters and the possible inputs for each of the
   })
  ```
  
- # TODO
- 1) Distance check (Maybe use Manhatten Distance ?)  
- 2) ContactDetails (For sending emails)
- 3) Account Database (For a login system and data collection)
+## 3) signup 
+### Parameters
+1) email : (To be verified in node using an otp)
+2) password : (To be hashed from the frontend itself)
+### Client API
+```
+let { data, error } = await supabase
+  .rpc('signup', {
+    email, 
+    password
+  })
+```
+
+## 4) login 
+### Parameters
+1) user_email
+2) user_password : (To be hashed from the frontend itself)
+### Returns
+The email if the password is correct and NULL if the password is incorrect
+### Client API
+```
+let { data, error } = await supabase
+  .rpc('signup', {
+    user_email, 
+    user_password
+  })
+```
+
+## 5) updatepassword
+### Parameters
+1) user_email
+2) user_password : (To be hashed from the frontend itself) (new)
+### Client API
+```
+let { data, error } = await supabase
+  .rpc('updatepassword', {
+    user_email, 
+    user_password
+  })
+```
+
+# TODO
+1) Distance check (Maybe use Manhatten Distance ?)  
+2) ContactDetails (For sending emails)
+3) Account Database (How to store bookmarks using a json string)
   
