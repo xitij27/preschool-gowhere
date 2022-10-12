@@ -89,7 +89,11 @@ const LoginComponent = () => {
                   <Form.Label><p className={styles.title} >Password</p></Form.Label>
                   <Form.Control type="password" required ref={passwordRef} />
                 </Form.Group>
-                <p style = {link}>Forgot password</p>
+                <p style = {link}>
+                  <Link style={{fontWeight: "600", fontSize: "1"}} to="/forgotpassword">
+                    Forgot password
+                  </Link>
+                </p>
                 <button
                 
                   disabled={loading}
