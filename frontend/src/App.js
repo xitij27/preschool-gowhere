@@ -11,6 +11,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup";
 import About from "./pages/About";
 import Home from "./pages/Home";
+import Forgotpassword from "./pages/Forgotpassword";
 
 function App() {
   return (
@@ -26,8 +27,8 @@ function App() {
               <Route exact path="/signup" element={<Signup />} />
               <Route exact path="/home" element={<Home />} />
               <Route exact path="/about" element={<About />} />
-              <Route exact path="/*" element={<Login />} />
-
+              <Route exact path="/forgotpassword" element={<Forgotpassword />} />
+              <Route exact path="/*" element={<Login />} />          
 
 
           </Routes>

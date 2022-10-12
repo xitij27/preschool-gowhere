@@ -77,7 +77,7 @@ const SignupComponent = () => {
                   <Form.Label><p className={styles.title} >Confirm Password</p></Form.Label>
                   <Form.Control type="password" required ref={confirmPasswordRef} />
                 </Form.Group>
-                <p style = {link}>Forgot password</p>
+                {/*<p style = {link}>Forgot password</p>*/}
                 <button
                   disabled={loading}
                   type="submit"
