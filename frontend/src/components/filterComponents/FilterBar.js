@@ -98,18 +98,11 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                     <div style={{display: "inline-block", marginRight: "15px"}}>{secondlangTitle}</div>
                 </Dropdown.Toggle>
 
-<<<<<<< Updated upstream
                 <Dropdown.Menu className={styles.dropdownmenu} >
                     {criterias["second_lang"].map((lang,index)=>{
                         return <Dropdown.Item key={index} onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
 
                     })}
-=======
-                <Dropdown.Menu  className={styles.dropdownmenu} >
-                    <Dropdown.Item >Chinese</Dropdown.Item>
-                    <Dropdown.Item >Arabic</Dropdown.Item>
-                    <Dropdown.Item >Bahasa Indonesia</Dropdown.Item>
->>>>>>> Stashed changes
                 </Dropdown.Menu>
             </Dropdown> 
             
@@ -123,19 +116,12 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                     <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{foodTitle}</div>
                 </Dropdown.Toggle>
 
-<<<<<<< Updated upstream
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setFoodInput(e)} >
                     
                     {criterias["food"].map((food,index)=>{
                         return <Dropdown.Item key={index} onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
 
                     })}
-=======
-                <Dropdown.Menu  className={styles.dropdownmenu} >
-                    <Dropdown.Item >Halal</Dropdown.Item>
-                    <Dropdown.Item >Vegetarian</Dropdown.Item>
-                    <Dropdown.Item >Non-Halal</Dropdown.Item>
->>>>>>> Stashed changes
                 </Dropdown.Menu>
             </Dropdown>
         </div>
