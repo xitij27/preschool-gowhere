@@ -42,6 +42,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     const [fees,setFees] = useState(5000);
     const [foodInput,setFoodInput] = useState(null);
     const [second_langInput,setSecond_langInput] = useState(null);
+    const [serviceInput,setServiceInput] = useState(null);
     const [sparkInput,setSparkInput] = useState("Default");
     const [transportInput,setTransportInput] = useState("Default");
     const [exOperatingHoursInput,setExOperatingHoursInput] = useState("Default")
@@ -53,11 +54,13 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     const [sparkTitle,setSparkTitle] = useState("Availability");
     const [transportTitle,setTransportTitle] = useState("Availability");
     const [exOperatingHoursInputTitle,setExOperatingHoursInputTitle] = useState("Availability");
+    const [serviceTitle,setServiceTitle] = useState("Services");
+
 
 
     const handleFilter =()=>
     {
-        const criterias = {location,fees,foodInput,second_langInput,sparkInput,transportInput,exOperatingHoursInput};
+        const criterias = {location,fees,foodInput,second_langInput,sparkInput,transportInput,exOperatingHoursInput,serviceInput};
         console.log(criterias);
     }
 
@@ -169,6 +172,24 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                 </Dropdown.Menu>
             </Dropdown>
         </div>
+
+        <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Services</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{serviceTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setServiceInput(e)} >
+                    
+                    {criterias["service"].map((service,index)=>{
+                        return <Dropdown.Item onClick={()=>{setServiceInput(service); setServiceTitle(service)}} key={index}>{service}</Dropdown.Item>
+
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+
         
 
         <div className = {styles.filterButton + " " + "btn"} onClick={handleFilter}>Filter</div>

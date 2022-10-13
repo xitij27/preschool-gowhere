@@ -1,6 +1,6 @@
 .google-maps
 {
-    background-image:url("../../images/mapBg.png");
+    background-image:url("../../images/mapBg.png"); /* remove vg image after putting google map component  */
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
