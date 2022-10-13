@@ -1,6 +1,4 @@
 import sys
-# For getting input from input.txt file
-sys.stdin = open('input.txt', 'r')
  
 # Printing the Output to output.txt file
 sys.stdout = open('output.txt', 'w')
@@ -30,16 +28,19 @@ for spark in ['Yes', 'Default']:
                         print('                if (second_lang = \'Chinese\') then')
                     else:
                         print(('                elsif (second_lang = \'' + second_lang + '\') then'))
-                    print('                    return query select distinct(centre_code) from "PreSchool" as f where ', end='')
-                    print('\"Lang_'+ second_lang+ '\" = true ', end='')
+                    print('                    return query select ps.centre_code, c.latitude, c.longitude from \"PreSchool\" ps, \"Fees\" f, \"Coords\" c ', end='')
+                    print('where f.centre_code = ps.centre_code and ps.centre_code = c.centre_code ', end='')
+                    print('and \"Lang_'+ second_lang+ '\" = true ', end='')
                     if(food != 'Default'):
-                        print('and food=\''+ food+ '\' ', end='')
+                        print('and ps.food=\''+ food+ '\' ', end='')
                     if(service != 'Default'):
-                        print('and \"service\"=service ', end='')
+                        print('and ps.service=service ', end='')
                     if(transport != 'Default'):
-                        print('and provision_of_transport=\''+ transport+ '\' ', end='')
+                        print('and ps.provision_of_transport=\''+ transport+ '\' ', end='')
                     if(spark != 'Default'):
                         print('and \"spark_certified\"=\''+ spark+ '\'', end='')
+                    print(' and (((c.latitude - user_lat)*(c.latitude - user_lat)) + ((c.longitude - user_long)*(c.longitude - user_long)) <= (distance*distance/10000)) ', end='')
+                    print(' and f.fees <= max_fee and f.fees >= min_fee and f.type_of_citizenship = citizenship and f.levels_offered = level and f.type_of_service = type_service', end = '')
                     print(';')
                     if(second_lang == 'Punjabi'):
                         print('                end if;')
