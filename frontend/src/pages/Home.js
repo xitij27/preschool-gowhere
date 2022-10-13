@@ -29,9 +29,10 @@ const Home = () => {
           </div>
 
           {/* Insert google map component here */}
-          {/*<div className={styles["google-maps"]}></div>*/}
-          <div className='map-styles'>
-          <Mapsfunc> </Mapsfunc>
+          <div className={styles["google-maps"]}>
+            <div className= {styles["map-styles"]}>
+              <Mapsfunc> </Mapsfunc>
+            </div>
           </div>
           {/* Expandable filter bar */}
           {expandFilterBar ? <div className={styles["blur-modal"]}>

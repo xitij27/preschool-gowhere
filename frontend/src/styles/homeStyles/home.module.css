@@ -1,8 +1,6 @@
 .google-maps
 {
-    background-image:url("../../images/mapBg.png"); /* remove vg image after putting google map component  */
-    background-size: cover;
-    background-repeat: no-repeat;
+    /* background-image:url("../../images/mapBg.png"); remove vg image after putting google map component  */
     height: 100%;
     width: 100%;
     position: absolute;
@@ -10,11 +8,14 @@
     left: 0;
     z-index: 0;
 }
+
 .map-styles
 {
     width: 100vw;
     height: 100vh;
+
 }
+
 .blur-modal
 {
   width: 100%;
