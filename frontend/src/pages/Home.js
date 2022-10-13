@@ -28,8 +28,12 @@ const Home = () => {
             < MdOutlineMenu size={36} color={"white"} />
           </div>
 
-          {/* Insert google map component here */}
-          <div className={styles["google-maps"]}></div>
+          <div className={styles["google-maps"]}>
+            
+            {/* Insert google map component here */}
+            
+
+          </div>
 
           
           {/* Expandable filter bar */}
