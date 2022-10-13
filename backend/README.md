@@ -1,5 +1,6 @@
 # Different Database Functions
-## 1) runmegafilter
+## 1) runmegafilter / runmegafilteremail
+Both these functions have the same input but return different values
 ### Parameters
 This is a list containing the parameters and the possible inputs for each of them
 1) food : ["No Pork No Lard with No Beef (without Certification from MUIS but from Halal Sources)",
