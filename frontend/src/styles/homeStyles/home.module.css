@@ -10,7 +10,11 @@
     left: 0;
     z-index: 0;
 }
-
+.map-styles
+{
+    width: 100vw;
+    height: 100vh;
+}
 .blur-modal
 {
   width: 100%;

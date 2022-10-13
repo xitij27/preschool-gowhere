@@ -11,7 +11,7 @@ import styles from "../styles/homeStyles/home.module.css";
 
 //import icons
 import {MdOutlineMenu} from "react-icons/md"
-
+import { Mapsfunc } from '../components/Maps/Maps.js';
 const Home = () => {
 
   const [expandFilterBar, setExpandFilterBar] = useState(false);
@@ -29,9 +29,10 @@ const Home = () => {
           </div>
 
           {/* Insert google map component here */}
-          <div className={styles["google-maps"]}></div>
-
-          
+          {/*<div className={styles["google-maps"]}></div>*/}
+          <div className='map-styles'>
+          <Mapsfunc> </Mapsfunc>
+          </div>
           {/* Expandable filter bar */}
           {expandFilterBar ? <div className={styles["blur-modal"]}>
             <FilterBar expandFilterBar={expandFilterBar} setExpandFilterBar = {setExpandFilterBar}   />
