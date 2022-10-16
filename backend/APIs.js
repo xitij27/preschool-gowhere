@@ -49,15 +49,6 @@ async function sendEmail(email){
 
 
 }
-function intersection(setA, setB) {
-     const result = new Set();
-     for (const elem of setA) {
-         if (setB.has(elem)) {
-             result.add(elem);
-         }
-     }
-     return Array.from(result);
- }
 app.post('/api/signup', (req,res) => {
      password = req.body.password;
      email = req.body.email;
@@ -172,51 +163,44 @@ app.post('/api/sendOTP/:email', (req,res) => {
            })();
 });
 app.post('/api/runQuery', (req, res) => {
-     food = req.body.food;
-     second_lang = req.body.second_lang;
-     service = req.body.service;
-     spark = req.body.spark;
-     transport = req.body.transport;
-     citizenship = req.body.citizenship;
-     level = req.body.level;
-     max_fee = req.body.max_fee;
-     min_fee = req.body.min_fee;
-     service = req.body.service;
-     
-     const Filter1 = async() => {
-         const {data} = await supabase.rpc('runfilter', {food:food,
-             second_lang: second_lang,
-             service: service,
-             spark:spark,
-             transport:transport});
-             return data;
+     const Filter = async() => {
+         const {data} = await supabase.rpc('runmegafilter', {
+             citizenship:req.body.citizenship,
+             distance: req.body.distance,
+             food:req.body.food,
+             level: req.body.level,
+             max_fee: req.body.max_fee,
+             min_fee: req.body.min_fee,
+             second_lang: req.body.second_lang,
+             service: req.body.service,
+             spark:req.body.spark,
+             transport:req.body.transport,
+             type_service: req.body.type_service,
+             user_lat: req.body.lat,
+             user_long: req.body.long,
+               });
+          return data;
          };
-     const Filter2 = async() => {
-     const {data} = await supabase.rpc('filterfees', {citizenship:citizenship,
-         level: level,
-         max_fee: max_fee,
-         min_fee: min_fee,
-         service: service});
-         return data;
-     };
      (async () => {
-         const data1 = await Filter1();
-         const data2 = await Filter2();
-         const setA = new Set(data1);
-         const setB = new Set(data2);
-         console.log(intersection(setA,setB));
-         res.send(intersection(setA,setB));
+         const data = await Filter();
+         console.log(data);
+         res.send(data);
      })();
  });
  
  const port = process.env.PORT || 3000;
  app.listen(port, () => console.log("Listening on: " + port));
- /*{food:"Default",
-             second_lang: "Tamil",
-             spark:"Default",
-             transport:"Default",
-          citizenship:"SC",
-         level: "Nursery (4 yrs old)",
-         max_fee: 800,
-         min_fee:700,
-         service:"Full Day"}*/
+ /*{
+    "food":"Default",
+    "second_lang": "Chinese",
+    "spark":"Default",
+    "transport":"Default",
+    "citizenship":"SC",
+    "level": "Kindergarten 1 (5 yrs old)",
+    "max_fee": 800,
+    "min_fee":700,
+    "type_service":"Full Day",
+    "service":"Default",
+    "lat": 1.3544009033833262,
+    "long":103.68816339427896,
+    "distance": 0.2}*/
