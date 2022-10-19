@@ -27,9 +27,8 @@ const dropdownbtn =
     backgroundColor: "#FC575E",
     paddingTop: "8px",
     paddingBottom: "8px",
-    minWidth: "250px",
+    minWidth: "100%",
     borderRadius:  "3px",
-    maxWidth: "250px",
     paddingLeft: "10px",
     paddingRight: "10px",
 }
@@ -40,9 +39,11 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     //criterias
     const [location,setLocation] = useState(50);
     const [fees,setFees] = useState(5000);
-    const [foodInput,setFoodInput] = useState(null);
-    const [second_langInput,setSecond_langInput] = useState(null);
-    const [serviceInput,setServiceInput] = useState(null);
+    const [minFees,setMinFees] = useState("1000");
+    const [maxFees,setMaxFees] = useState("4000");
+    const [foodInput,setFoodInput] = useState("Default");
+    const [second_langInput,setSecond_langInput] = useState("Chinese");
+    const [serviceInput,setServiceInput] = useState("Default" );
     const [sparkInput,setSparkInput] = useState("Default");
     const [transportInput,setTransportInput] = useState("Default");
     const [exOperatingHoursInput,setExOperatingHoursInput] = useState("Default")
@@ -60,7 +61,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
     const handleFilter =()=>
     {
-        const criterias = {location,fees,foodInput,second_langInput,sparkInput,transportInput,exOperatingHoursInput,serviceInput};
+        const criterias = {"distance":location,"min_fee" : minFees,"max_fee" : maxFees,"food" : foodInput,"second_lang" : second_langInput, "spark" : sparkInput, "transport" : transportInput, "extendedOperatinHours" : exOperatingHoursInput,"service" : serviceInput};
         console.log(criterias);
     }
 
@@ -75,7 +76,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         {/* title "filter preschools" */}
         <div className={styles.title}>Filter Preschools</div>
 
-        {/* sliders for location and fees */}
+        {/* sliders for distance from home criteria */}
         <div className= {styles.slider}>
             <div className={styles.criteriaTitle}>Location (km) </div>
             <Form.Range min={"0"} max={"50"} onChange={(e)=>setLocation(e.target.value)}/>
@@ -84,13 +85,39 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         </div>
 
         
-        <div className= {styles.slider}>
+        {/* <div className= {styles.slider}>
 
             <div className={styles.criteriaTitle}>Fees (per month)</div>
             <Form.Range min={"0"} max={"5000"} onChange={(e)=>setFees(e.target.value)}/>
             <div className={styles.para}>Fees per month: <b>{`$${fees}`}</b></div>
         
+        </div> */}
+
+        {/* Slider for min and max fees criteria*/}
+        <div className={styles.criteriaTitle}>Price Range ($)</div>
+        <div className={styles.fees}>
+            <div className={styles.priceInput}>
+                <div className={styles.field}>
+                    <span style={{color: "#FC575E", fontWeight: " 600"}}>Min</span>
+                    <div className={styles.inputMin}>{minFees}</div>
+                </div>
+                <div className={styles.field}>
+                    <span style={{color: "#FC575E", fontWeight: " 600"}}>Max</span>
+                    <div className={styles.inputMax}>{maxFees}</div>
+                </div>
+            </div>
+
+            <div className={styles.rangeInput}>
+                <div style={{color: "#FC575E", fontWeight: "500"}}>Adjust Min Price</div>
+                <input type="range" min="0" max="5000" value={minFees} onChange={e => setMinFees(e.target.value)} className={styles.rangeMin}></input>
+                <div style={{color: "#FC575E", fontWeight: " 500"}}>Adjust Max price</div>
+                <input type="range" min="0" max="5000" value= {maxFees} onChange={e => setMaxFees(e.target.value)}  className={styles.rangeMax}></input>
+            </div>
+
+
         </div>
+
+
 
         {/* other criterias */}
 
@@ -163,7 +190,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             <div className={styles.criteriaTitle}>Spark Certified</div>
             <Dropdown className={styles.dropdownbtn}>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
-                    <div style={{display: "inline-block", marginRight: "15px"}}> Availability</div>
+                    <div style={{display: "inline-block", marginRight: "15px"}}> {sparkTitle}</div>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu  className={styles.dropdownmenu} >

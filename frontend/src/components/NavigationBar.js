@@ -25,6 +25,7 @@ const NavigationBar = () => {
                   style={{ maxHeight: '150px', width: "100%" }}
                   navbarScroll
                 >
+                  <Nav.Link ><Link className="navbarlink" to="/home" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Home</Link></Nav.Link>
                   <Nav.Link ><Link style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}} className="navbarlink" to="/about">About</Link></Nav.Link>
                   <Nav.Link ><Link className="navbarlink" to="/login" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Login</Link></Nav.Link>
                   <Nav.Link ><Link className="navbarlink" to="/Signup" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Signup</Link></Nav.Link>

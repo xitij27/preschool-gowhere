@@ -1,7 +1,7 @@
 .filterbar
 {
     padding: 20px 30px;
-    width: 350px;
+    width: 360px;
     padding-top: 36px;
     background-color: white;
     height: 100vh;
@@ -54,8 +54,7 @@
     padding-top: 8px;
     padding-bottom: 8px;
     margin-top: 20px;
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 100%;
 }
 
 
@@ -64,3 +63,86 @@
     background-color: #FC575E;
     color: white;
 }
+
+.fees
+{
+    background-color: white;
+    padding: 15px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+
+}
+
+
+.priceInput
+{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin: 10px 10px;
+}
+
+.priceInput .field
+{
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.priceInput .field .inputMin, .inputMax
+{
+    width: 60px;
+    margin-left: 10px;
+    outline: none;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 4px;
+    /* border: 2px solid #FC575E; */
+    background-color: #FC575E;
+    border: 1px solid #FC575E;
+    color: white;
+
+}
+.rangeInput input
+{
+    margin-bottom: 12px;
+}
+
+
+
+.inputMin
+{
+
+}
+.inputMax
+{
+
+}
+
+
+
+
+.rangeInput
+{
+    position: relative;
+
+}
+.rangeInput input
+{
+    height: 5px;
+    width: 100%;
+    background: none;
+    color: yellow;
+}
+
+
+
+input[type = range]::-webkit-slider-thumb
+{
+    background-color: #FC575E;
+ }
+
+ 
