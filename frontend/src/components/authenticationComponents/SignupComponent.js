@@ -8,6 +8,7 @@ import { Form, Button, Alert, Card } from "react-bootstrap";
 
 import { motion } from "framer-motion";
 
+import axios from "axios"
 // react routing import
 import { Link, useNavigate } from "react-router-dom";
 
@@ -27,7 +28,7 @@ const SignupComponent = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-
+  const [otp,setOtp] = useState();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -53,13 +54,24 @@ const SignupComponent = () => {
     successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
   }
 
+  const sendOtp = () =>
+  {
+    console.log("test");
+    console.log(emailRef.current.value)
+    axios.post(`http://localhost:3005/api/sendOTP/${emailRef.current.value}`)
+    .then((res)=>{console.log(res.data);    
+    successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
+    })
+    .catch((err)=>{console.log(err);
+    failedAlert("Something went wrong", "Please try again!")})
 
+  }
 
   return (
     <div className={styles.signup}>
       <Card className={styles["signup-card"]}>
             <Card.Body>
-              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>Register Account</p>
+              <p className="mb-1" style={{fontSize:  "40px", fontWeight: "650", textAlign: "center"}}>Register Account</p>
               <p style={{ color: "#495057", fontSize: "17px",textAlign: "center", fontWeight: '500' }}>
                 Please enter your details
               </p>
@@ -77,7 +89,12 @@ const SignupComponent = () => {
                   <Form.Label><p className={styles.title} >Confirm Password</p></Form.Label>
                   <Form.Control type="password" required ref={confirmPasswordRef} />
                 </Form.Group>
-                {/*<p style = {link}>Forgot password</p>*/}
+                <Form.Group id={styles.otp} className={styles.fields}>
+                  <Form.Label><p className={styles.title} >Enter OTP</p></Form.Label>
+                  <Form.Control />
+                  <div onClick={sendOtp} className="btn" id={styles.otpBtn}>Generate OTP</div>
+                </Form.Group>
+
                 <button
                   disabled={loading}
                   type="submit"

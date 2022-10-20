@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import { useJsApiLoader,GoogleMap, Marker } from '@react-google-maps/api';
+import { useJsApiLoader,GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 
 //sweetalert notification
 import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
@@ -12,6 +12,7 @@ import {useAuth} from "../../context/AuthContext";
 
 //api key 
 const apiKey ='REDACTED_GOOGLE_MAPS_API_KEY';
+// const apiKey = 'XXX';
 
 //locations
 const centerSingapore = {lat: 1.352 , lng:103.820 };
@@ -25,7 +26,7 @@ const preschools = [{"location": {lat: 1.3936324613004758, lng:  103.90174541069
 const Map = () => {
 
     //useContext
-    const {userLocation} = useAuth();
+    const [selectedSchool, setSelectedSchool] = useState(null);
     
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: apiKey ,
@@ -46,16 +47,25 @@ const Map = () => {
                 {preschools.map((preschool,index)=>{
                     return(
                         <div className='preschool' key={index}>
-                            <Marker  position={preschool.location} />
-                            <div className='preschool-content'>
-                                <h2>{preschool['preschool name']}</h2>
-                                <p>Rating: {preschool.rating}</p>
-                            </div>
+                            <Marker key={index} position={preschool.location} 
+                            onClick={()=>{
+                                setSelectedSchool(preschool);
+                            }} />
+                            
+                            
                         </div>
                     )
                 })}
 
-
+            {selectedSchool && (
+                <InfoWindow className={styles.infoWindow} position={selectedSchool.location} onCloseClick ={()=>{setSelectedSchool(null)}}>
+                    <>
+                        <p className={styles.title}>Preschool information</p>
+                        <p className={styles.para}><b>Name: </b>{selectedSchool['preschool name']}</p>
+                        <p className={styles.para}><b>Rating: </b>{selectedSchool.rating}</p>
+                    </>
+                </InfoWindow>
+            )}
             </GoogleMap>
 
         </div>

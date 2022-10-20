@@ -7,11 +7,11 @@
 .title
 {
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .fields
 {
-  margin: 10px 0px;
+  margin: 8px 0px;
 }
 
 .signup-card
@@ -19,8 +19,6 @@
     width: 100%;
     margin: 0 auto; 
     padding: 0px 20px;
-    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 6px; */
     border: 0px;
 }
 
@@ -38,4 +36,23 @@
 .logout-btn-icon {
     margin-left: 4px;
     margin-bottom: 1px;
+}
+
+#otp
+{
+  position: relative;
+  margin-bottom: 15px;
+}
+
+#otpBtn
+{
+  position: absolute;
+  top:40px;
+  right: 5px;
+  margin-top: 0;
+  background-color: #FC575E;
+  font-size: 13px;
+  color: white;
+  font-weight: 400;
+  padding: 5px 5px;
 }
