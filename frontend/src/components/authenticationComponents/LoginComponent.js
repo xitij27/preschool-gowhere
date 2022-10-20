@@ -12,12 +12,17 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 // import css styles
 import styles from "../../styles/authenticationStyles/login.module.css";
 
+//import context
+import {useAuth} from "../../context/AuthContext";
+
 //Testing with dummy data
 import {users} from  "../../utilities/userData" ;
 
+import axios from "axios";
+
 const LoginComponent = () => {
 
-
+  //useContext variables
   //state variables
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -27,50 +32,35 @@ const LoginComponent = () => {
   //navigate
   const navigate = useNavigate();
 
-
-  //custom styling objects
-  const link = 
-  {
-    fontSize: "16px",
-    fontWeight: "620",
-    marginLeft: "0px",
-    float: "right",
-  }
-
   const handleSubmit = async(e)=>
   {
     e.preventDefault();
     setError("");
 
-    //Proceed to do more input validation 
-
-
     //Authenticate user details with backend 
-    
-
-    //Testing with dummy data
     const emailInput = emailRef.current.value;
     const passwordInput = passwordRef.current.value;
+    axios.post("http://localhost:3005/api/login",null,{emailInput,passwordInput})
+    .then(async(res)=>{
+      console.log(res);
+      if (res.data == "Succesfully logged in!")
+      {
+        successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
+        await sleep(2000);
+        navigate("/home");
+      }
+      else
+      {
+        failedAlert("Login unsuccessful!", res.data);
+      }
+    })
+    .catch((err)=>{
+      failedAlert("Login unsuccessful!", "Oops something went wrong. Did you entered the correct email/ password?");
+    });
+    };
 
-    if (emailInput == users[0].email && passwordInput == users[0].password)
-    {
-      console.log("successfully authenticated");
-      successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
-      await sleep(2000);
-      navigate("/home");
-
-    }
-    else
-    {
-      failedAlert("Log in unsuccessful!", "Please retry again!") 
-    }
-
-    //if login authentication succeeds, set authContext user's status as authenticated. Show success popup
-    //successAlert("Login Success", "Succesfully logged in! Redirecting to home page");
-  }
-
-
-
+    
+  
   return (
     <div className={styles.login}>
       <Card className={styles["login-card"]}>
@@ -121,6 +111,15 @@ const LoginComponent = () => {
 
 const sleep = (milliseconds) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds))
+}
+
+//custom styling objects
+const link = 
+{
+  fontSize: "16px",
+  fontWeight: "620",
+  marginLeft: "0px",
+  float: "right",
 }
 
 export default LoginComponent
