@@ -40,7 +40,7 @@ const LoginComponent = () => {
     //Authenticate user details with backend 
     const emailInput = emailRef.current.value;
     const passwordInput = passwordRef.current.value;
-    axios.post("http://localhost:3005/api/login",null,{emailInput,passwordInput})
+    axios.post("http://localhost:3005/api/login",{"email": emailInput,"password": passwordInput})
     .then(async(res)=>{
       console.log(res);
       if (res.data == "Succesfully logged in!")

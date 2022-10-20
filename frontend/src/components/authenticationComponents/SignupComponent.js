@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 import axios from "axios"
 // react routing import
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 
@@ -28,10 +28,12 @@ const SignupComponent = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-  const [otp,setOtp] = useState();
+  const otpRef = useRef();
+  const [otpCorrect, setOtpCorrect] = useState();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
 
   const handleSubmit = async(e)=>
   {
@@ -48,22 +50,35 @@ const SignupComponent = () => {
     }
 
     //post user data to backeend
+    console.log(otpRef.current.value)
+    axios.post("http://localhost:3005/api/signup",{"password": passwordRef.current.value,"email": emailRef.current.value, "OTP": otpRef.current.value})
+    .then((res)=>{
+      console.log(res.data);
+      
+      if (res.data === "Account succesfully created!")
+      {
+        successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
+        navigate("/home");
+      }
+      else
+      {
+        failedAlert("Registration Failed", res.data);
+      }
+
+    })
 
 
-    // if successfully registered
-    successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
   }
 
   const sendOtp = () =>
   {
-    console.log("test");
-    console.log(emailRef.current.value)
-    axios.post(`http://localhost:3005/api/sendOTP/${emailRef.current.value}`)
+    console.log(emailRef.current.value);
+    axios.post("http://localhost:3005/api/sendOTP",{"email": emailRef.current.value})
     .then((res)=>{console.log(res.data);    
     successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
     })
     .catch((err)=>{console.log(err);
-    failedAlert("Something went wrong", "Please try again!")})
+    failedAlert("Something went wrong", "Please try again!")});
 
   }
 
@@ -91,8 +106,8 @@ const SignupComponent = () => {
                 </Form.Group>
                 <Form.Group id={styles.otp} className={styles.fields}>
                   <Form.Label><p className={styles.title} >Enter OTP</p></Form.Label>
-                  <Form.Control />
-                  <div onClick={sendOtp} className="btn" id={styles.otpBtn}>Generate OTP</div>
+                  <Form.Control required ref={otpRef}/>
+                  <div onClick={sendOtp} className="btn" id={styles.otpBtn} >Generate OTP</div>
                 </Form.Group>
 
                 <button
