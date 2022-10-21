@@ -2,13 +2,24 @@ const express = require('express');
 var cors = require('cors')
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors());
+const bodyParser = require("body-parser");
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const {createClient} = require('@supabase/supabase-js');
 const supabaseUrl = 'https://gjzcfefmcwhswjobgdqy.supabase.co';
 const supabaseKey = 'REDACTED_SUPABASE_ANON_KEY';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+const nodemailer = require('nodemailer');
+const transporter = nodemailer.createTransport({
+     service:'outlook365',
+     auth: {
+     user: 'scared2compile@outlook.com',
+     pass: 'REDACTED_EMAIL_PASSWORD'
+     }
+     });
 OTPs = new Map();
 function generateOTP(email){
      var digits='0123456789';
@@ -19,20 +30,12 @@ function generateOTP(email){
     }
     return otp;
 }
-async function sendEmail(email){
+async function sendOTP(email){
      OTPs.set(email,generateOTP(email));
-     var nodemailer = require('nodemailer');
-        var transporter = nodemailer.createTransport({
-        service:'outlook365',
-        auth: {
-        user: 'scared2compile@outlook.com',
-        pass: 'REDACTED_EMAIL_PASSWORD'
-        }
-        });
         var mailOptions = {
         from: 'scared2compile@outlook.com',
         to: email,
-        subject: 'Your One-Time-Password for login to preschoolgowhere',
+        subject: 'Your One-Time-Password for preschoolgowhere',
         text: 'Your OTP is '+OTPs.get(email)+'. This OTP is valid for 15 minutes. Please do not share with anyone. If you have logged in again, then do not use this OTP.'
         };
         return new Promise(function (resolve, reject){
@@ -46,8 +49,25 @@ async function sendEmail(email){
              }
             });
         });
-
-
+}
+async function sendinfo(email,data){
+        var mailOptions = {
+        from: 'scared2compile@outlook.com',
+        to: email,
+        subject: 'Centre Info',
+        text: data
+        };
+        return new Promise(function (resolve, reject){
+            transporter.sendMail(mailOptions, (err, info) => {
+             if (err) {
+                console.log("error: ", err);
+                reject(err);
+            } else {
+                 console.log(`Mail sent successfully!`);
+                resolve(info);
+             }
+            });
+        });
 }
 app.post('/api/signup', (req,res) => {
      password = req.body.password;
@@ -115,7 +135,7 @@ app.post('/api/login', (req,res) => {
                                         }
                     else{
                          console.log("Incorrect password!");
-                         res.send("Login Unsuccesful");
+                         res.send("Login Unsuccesful. Incorrect password.");
                     }
                }
            })();
@@ -155,14 +175,47 @@ app.post('/api/updatepassword', (req,res) => {
       })();
 
 });
-app.post('/api/sendOTP/:email', (req,res) => {
+app.post('/api/sendOTP', (req,res) => {
           (async () => {
-                    const {data} = await sendEmail(req.params.email);
-                    console.log(OTPs.get(req.params.email));
+                    const {data} = await sendOTP(req.body.email);
+                    console.log(OTPs.get(req.body.email));
                     res.send("OTP has been sent to your email!")
            })();
 });
-app.post('/api/runQuery', (req, res) => {
+app.post('/api/filteremail', (req, res) => {
+     const Filter = async() => {
+         const {data} = await supabase.rpc('runmegafilteremail', {
+             citizenship:req.body.citizenship,
+             distance: req.body.distance,
+             food:req.body.food,
+             level: req.body.level,
+             max_fee: req.body.max_fee,
+             min_fee: req.body.min_fee,
+             second_lang: req.body.second_lang,
+             service: req.body.service,
+             spark:req.body.spark,
+             transport:req.body.transport,
+             type_service: req.body.type_service,
+             user_lat: req.body.lat,
+             user_long: req.body.long,
+               });
+          return data;
+         };
+     (async () => {
+         const data = await Filter();
+         console.log(data);
+         if(req.body.email != ""){
+          var emailtext = "";
+          for(var element of data){
+               var myJSON = JSON.stringify(element);
+               emailtext+=myJSON+"\n";
+          }
+          const {temp} = await sendinfo(req.body.email,emailtext);
+         }
+         res.send(data);
+     })();
+ });
+ app.post('/api/filter', (req, res) => {
      const Filter = async() => {
          const {data} = await supabase.rpc('runmegafilter', {
              citizenship:req.body.citizenship,
@@ -203,4 +256,5 @@ app.post('/api/runQuery', (req, res) => {
     "service":"Default",
     "lat": 1.3544009033833262,
     "long":103.68816339427896,
-    "distance": 0.2}*/
+    "distance": 0.2,
+"email": ""}*/
