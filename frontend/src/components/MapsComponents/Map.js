@@ -11,8 +11,7 @@ import styles from "../../styles/mapStyles/map.module.css";
 import {useAuth} from "../../context/AuthContext";
 
 //api key 
-const apiKey ='REDACTED_GOOGLE_MAPS_API_KEY';
-// const apiKey = 'XXX';
+const apiKey ='ENTERAPIKEY';
 
 //locations
 const centerSingapore = {lat: 1.352 , lng:103.820 };
@@ -43,7 +42,7 @@ const Map = () => {
 
     return (
         <div style={{height: "100vh", maxWidth: "100vw"}}>
-            <GoogleMap center={centerSingapore} zoom={12.5} mapContainerStyle={{width: "100%", height: "100%"}}>
+            <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "100%"}}>
                 {preschools.map((preschool,index)=>{
                     return(
                         <div className='preschool' key={index}>
