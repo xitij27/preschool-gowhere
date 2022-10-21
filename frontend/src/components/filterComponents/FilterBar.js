@@ -67,17 +67,14 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
     const handleFilter =()=>
     {
-        // const criterias = {"distance":location,"min_fee" : minFees,"max_fee" : maxFees,"food" : foodInput,"second_lang" : second_langInput, "spark" : sparkInput, "transport" : transportInput, "extendedOperatinHours" : exOperatingHoursInput,"service" : serviceInput};
         const criterias = 
         {
             "food": foodInput ,
             "second_lang": second_langInput,
             "spark": sparkInput,
             "transport": transportInput,
-
             "citizenship": basicCriterias.citizenship,
             "level": basicCriterias.level,
-            
             "max_fee": maxFees,
             "min_fee": minFees,
             "type_service": basicCriterias["type_service"],
@@ -89,9 +86,12 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         
         //post request to backend for filter functionality
         axios.post("http://localhost:3005/api/filter",criterias)
-        .then((res)=>console.log(res.data))
+        .then((res)=>{
+            console.log(res.data);
+            setExpandFilterBar(!expandFilterBar);
+            successAlert("Loading Filters", "Searching for the most suitable preschools for you!");
+        })
         .catch((err)=> console.log(err));
-
     }
 
 

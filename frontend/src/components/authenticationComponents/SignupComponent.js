@@ -14,17 +14,17 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 
-//custom styling objects
-const link = 
-{
-    fontSize: "16px",
-    fontWeight: "620",
-    marginLeft: "0px",
-    float: "right",
-}
+//import context
+import {useAuth} from "../../context/AuthContext";
+
 
 const SignupComponent = () => {
 
+  //context state variables (for auth)
+  const {setAuthenticated} = useAuth();
+
+
+  //use State variables
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -58,7 +58,8 @@ const SignupComponent = () => {
       if (res.data === "Account succesfully created!")
       {
         successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
-        navigate("/home");
+        setAuthenticated(true);
+        navigate("/app/home");
       }
       else
       {
@@ -132,6 +133,15 @@ const SignupComponent = () => {
        
     </div>
   )
+}
+
+//custom styling objects
+const link = 
+{
+    fontSize: "16px",
+    fontWeight: "620",
+    marginLeft: "0px",
+    float: "right",
 }
 
 export default SignupComponent

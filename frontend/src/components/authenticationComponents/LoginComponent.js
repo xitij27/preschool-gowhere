@@ -23,6 +23,7 @@ import axios from "axios";
 const LoginComponent = () => {
 
   //useContext variables
+  const {authenticated,setAuthenticated} = useAuth();
   //state variables
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -46,8 +47,9 @@ const LoginComponent = () => {
       if (res.data == "Succesfully logged in!")
       {
         successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
+        setAuthenticated(true);
         await sleep(2000);
-        navigate("/home");
+        navigate("/app/home");
       }
       else
       {

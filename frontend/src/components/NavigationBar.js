@@ -9,8 +9,17 @@ import Form from 'react-bootstrap/Form';
 // react routing import
 import { Link } from "react-router-dom";
 
+//import context
+import {useAuth} from "../context/AuthContext";
+
+import { successAlert, failedAlert } from "../helpers/sweetalerthelper";
+
 
 const NavigationBar = () => {
+
+  const {setAuthenticated} = useAuth();
+
+  
   return (
 
     <Navbar style ={{backgroundColor: "#FC575E" , paddingTop:"10px", paddingBottom: "10px", paddingLeft: "20px", paddingRight: "40px"}} expand="lg">
@@ -25,10 +34,17 @@ const NavigationBar = () => {
                   style={{ maxHeight: '150px', width: "100%" }}
                   navbarScroll
                 >
-                  <Nav.Link ><Link className="navbarlink" to="/home" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Home</Link></Nav.Link>
-                  <Nav.Link ><Link style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}} className="navbarlink" to="/about">About</Link></Nav.Link>
-                  <Nav.Link ><Link className="navbarlink" to="/login" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Login</Link></Nav.Link>
-                  <Nav.Link ><Link className="navbarlink" to="/Signup" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Signup</Link></Nav.Link>
+                  <Nav.Link ><Link className="navbarlink" to="/app/home" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Home</Link></Nav.Link>
+                  <Nav.Link ><Link style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}} className="navbarlink" to="/app/about">About</Link></Nav.Link>
+                  {/* <Nav.Link ><Link className="navbarlink" to="/login" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Login</Link></Nav.Link>
+                  <Nav.Link ><Link className="navbarlink" to="/Signup" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Signup</Link></Nav.Link> */}
+                  <Nav.Link ><Link onClick={()=>
+                  {
+                    setAuthenticated(false);
+                    successAlert("Logged out successfully", "Return to where you were by logging back in!")
+                                          
+                  }} 
+                  style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}} className="navbarlink" to="/login">Logout</Link></Nav.Link>
 
                 </Nav>
                 

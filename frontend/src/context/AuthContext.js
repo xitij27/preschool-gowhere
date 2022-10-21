@@ -7,6 +7,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
 
     const [currentUser, setCurrentUser] = useState();
+    const [authenticated,setAuthenticated] = useState(false);
     const [curUsername, setCurUsername] = useState("");
     const [userLocation, setUserLocation] = useState({});
 
@@ -31,14 +32,11 @@ export const AuthProvider = ({ children }) => {
 
     const value = {
         currentUser,
+        setCurrentUser,
+        authenticated,
+        setAuthenticated,
         userLocation,
         basicCriterias,
-        //signup,
-        //login,
-        //logout,
-        //resetPassword,
-        //setCurUsername,
-        //curUsername,
     };
     return (
         <AuthContext.Provider value={value}>
