@@ -30,6 +30,23 @@ function generateOTP(email){
     }
     return otp;
 }
+function convert_html(obj){
+     var html = '<table>';
+          html += '<tr>';
+          for( var j in obj[0] ) {
+           html += '<th>' + j + '</th>';
+          }
+          html += '</tr>';
+          for( var i = 0; i < obj.length; i++) {
+           html += '<tr>';
+          for( var j in obj[i] ) {
+           html += '<td>' + obj[i][j] + '</td>';
+           }
+          html += '</tr>';
+          }
+          html += '</table>';
+     return html;
+}
 async function sendOTP(email){
      OTPs.set(email,generateOTP(email));
         var mailOptions = {
@@ -54,8 +71,8 @@ async function sendinfo(email,data){
         var mailOptions = {
         from: 'scared2compile@outlook.com',
         to: email,
-        subject: 'Centre Info',
-        text: data
+        subject: 'Your filter results are here!',
+        html: data
         };
         return new Promise(function (resolve, reject){
             transporter.sendMail(mailOptions, (err, info) => {
@@ -205,11 +222,7 @@ app.post('/api/filteremail', (req, res) => {
          const data = await Filter();
          console.log(data);
          if(req.body.email != ""){
-          var emailtext = "";
-          for(var element of data){
-               var myJSON = JSON.stringify(element);
-               emailtext+=myJSON+"\n";
-          }
+          const emailtext = convert_html(data);
           const {temp} = await sendinfo(req.body.email,emailtext);
          }
          res.send(data);
