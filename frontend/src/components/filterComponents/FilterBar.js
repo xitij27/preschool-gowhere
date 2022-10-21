@@ -16,10 +16,14 @@ import { AiFillCloseCircle } from "react-icons/ai";
 
 import {criterias} from "../../utilities/criterias"
 
+//import context
+import {useAuth} from "../../context/AuthContext";
+
 //bootstrap imports
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import { Button, DropdownButton } from "react-bootstrap";
+import axios from "axios";
 
 //styling of bootstrap components
 const dropdownbtn = 
@@ -57,12 +61,37 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     const [exOperatingHoursInputTitle,setExOperatingHoursInputTitle] = useState("Availability");
     const [serviceTitle,setServiceTitle] = useState("Services");
 
+    //context state variables
+    const { userLocation,basicCriterias } = useAuth();
 
 
     const handleFilter =()=>
     {
-        const criterias = {"distance":location,"min_fee" : minFees,"max_fee" : maxFees,"food" : foodInput,"second_lang" : second_langInput, "spark" : sparkInput, "transport" : transportInput, "extendedOperatinHours" : exOperatingHoursInput,"service" : serviceInput};
-        console.log(criterias);
+        // const criterias = {"distance":location,"min_fee" : minFees,"max_fee" : maxFees,"food" : foodInput,"second_lang" : second_langInput, "spark" : sparkInput, "transport" : transportInput, "extendedOperatinHours" : exOperatingHoursInput,"service" : serviceInput};
+        const criterias = 
+        {
+            "food": foodInput ,
+            "second_lang": second_langInput,
+            "spark": sparkInput,
+            "transport": transportInput,
+
+            "citizenship": basicCriterias.citizenship,
+            "level": basicCriterias.level,
+            
+            "max_fee": maxFees,
+            "min_fee": minFees,
+            "type_service": basicCriterias["type_service"],
+            "service": serviceInput,
+            "lat": userLocation.lat,
+            "long": userLocation.lng,
+            "distance": location
+        }
+        
+        //post request to backend for filter functionality
+        axios.post("http://localhost:3005/api/filter",criterias)
+        .then((res)=>console.log(res.data))
+        .catch((err)=> console.log(err));
+
     }
 
 

@@ -6,49 +6,18 @@ const AuthContext = React.createContext();
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
 
-  const [currentUser, setCurrentUser] = useState();
-  const [curUsername, setCurUsername] = useState("");
-  const [userLocation, setUserLocation] = useState({});
+    const [currentUser, setCurrentUser] = useState();
+    const [curUsername, setCurUsername] = useState("");
+    const [userLocation, setUserLocation] = useState({});
 
-    //signup
-    //   const signup = (email, password) => {
-    //     return createUserWithEmailAndPassword(auth, email, password);
-    //   };
+    const [basicCriterias, setBasicCriterias] = useState(
+    {
+        "citizenship": "SC",
+        "level": "Kindergarten 1 (5 yrs old)",
+        "type_service": "Full Day",
+    }
+    ); //basic criterias will be set by user once user signs up
 
-    //login
-    // const login =  async(email, password) => {
-    // await axios.post("http://localhost:3005/api/login",null,{email,password})
-    // .then((res)=>console.log(res))
-    // .catch((err)=>console.log(err));
-    // };
-
-    //logout
-    //   const logout = (email) => {
-    //     return signOut(auth, email);
-    //   };
-
-    //resetPw
-    //   const resetPassword = (email) => {
-    //     return sendPasswordResetEmail(auth, email);
-    //   };
-
-
-    //   useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged((user) => {
-    //       setCurrentUser(user);
-    //     });
-    //     return unsubscribe;
-    //   }, []);
-
-    //get user location
-    // const getUserLocation = () =>
-    // {
-    //     navigator.geolocation.getCurrentPosition(function(position) {
-    //         console.log("Latitude is :", position.coords.latitude);
-    //         console.log("Longitude is :", position.coords.longitude);
-    //         setUserLocation({"lat":position.coords.latitude, "lng": position.coords.longitude})
-    //     });
-    // }
 
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -63,6 +32,7 @@ export const AuthProvider = ({ children }) => {
     const value = {
         currentUser,
         userLocation,
+        basicCriterias,
         //signup,
         //login,
         //logout,
