@@ -36,8 +36,6 @@ const NavigationBar = () => {
                 >
                   <Nav.Link ><Link className="navbarlink" to="/app/home" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Home</Link></Nav.Link>
                   <Nav.Link ><Link style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}} className="navbarlink" to="/app/about">About</Link></Nav.Link>
-                  {/* <Nav.Link ><Link className="navbarlink" to="/login" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Login</Link></Nav.Link>
-                  <Nav.Link ><Link className="navbarlink" to="/Signup" style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}}>  Signup</Link></Nav.Link> */}
                   <Nav.Link ><Link onClick={()=>
                   {
                     setAuthenticated(false);

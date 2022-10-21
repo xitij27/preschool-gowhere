@@ -18,31 +18,35 @@ import PrivateRoute from "./components/PrivateRoute"
 
 //providers
 import { AuthProvider } from "./context/AuthContext";
+import { FilterProvider } from "./context/FilterContext";
+
 
 function App() {
   return (
     <div className="App">
       <AuthProvider>
-        <div className="content">
-          <Router>
-            <Routes>
-                {/* private routes */}
-                <Route path="/app" element={<PrivateRoute />}>
-                  <Route exact path="/app/home" element={<Home />} />
-                  <Route exact path="/app/about" element={<About />} />
-                </Route>
+        <FilterProvider>
+          <div className="content">
+            <Router>
+              <Routes>
+                
+                  {/* private routes */}
+                  <Route path="/app" element={<PrivateRoute />}>
+                    <Route exact path="/app/home" element={<Home />} />
+                    <Route exact path="/app/about" element={<About />} />
+                  </Route>
 
-                {/* public routes */}
-                <Route exact path="/" element={<Login />} />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/signup" element={<Signup />} />
-                <Route exact path="/forgotpassword" element={<Forgotpassword />} />
-                <Route exact path="/*" element={<Login />} />          
-
-
-            </Routes>
-          </Router>
-        </div>
+                  {/* public routes */}
+                  <Route exact path="/" element={<Login />} />
+                  <Route exact path="/login" element={<Login />} />
+                  <Route exact path="/signup" element={<Signup />} />
+                  <Route exact path="/forgotpassword" element={<Forgotpassword />} />
+                  <Route exact path="/*" element={<Login />} />          
+                  
+              </Routes>
+            </Router>
+          </div>
+        </FilterProvider>
       </AuthProvider>
     </div>
   );

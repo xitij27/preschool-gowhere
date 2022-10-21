@@ -7,7 +7,7 @@ import React, { useRef,useState } from "react";
 // react routing import
 import { Link, useNavigate } from "react-router-dom";
 
-import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
+import { successAlert, failedAlert, successAlertFast } from "../../helpers/sweetalerthelper";
 
 //icons import
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -25,17 +25,9 @@ import Form from 'react-bootstrap/Form';
 import { Button, DropdownButton } from "react-bootstrap";
 import axios from "axios";
 
-//styling of bootstrap components
-const dropdownbtn = 
-{
-    backgroundColor: "#FC575E",
-    paddingTop: "8px",
-    paddingBottom: "8px",
-    minWidth: "100%",
-    borderRadius:  "3px",
-    paddingLeft: "10px",
-    paddingRight: "10px",
-}
+
+import { useFilter } from '../../context/FilterContext';
+
 
 const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
@@ -63,6 +55,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
     //context state variables
     const { userLocation,basicCriterias } = useAuth();
+    const {filteredPreschools,setFilteredPreschools} = useFilter();
 
 
     const handleFilter =()=>
@@ -87,9 +80,10 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         //post request to backend for filter functionality
         axios.post("http://localhost:3005/api/filter",criterias)
         .then((res)=>{
-            console.log(res.data);
+            //console.log(res.data);
+            setFilteredPreschools(res.data);
             setExpandFilterBar(!expandFilterBar);
-            successAlert("Loading Filters", "Searching for the most suitable preschools for you!");
+            successAlertFast("Loading Filters", "Searching for the most suitable preschools for you!");
         })
         .catch((err)=> console.log(err));
     }
@@ -112,15 +106,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             <div className={styles.para}>Distance from home: <b>{`${location} km`}</b></div>
 
         </div>
-
-        
-        {/* <div className= {styles.slider}>
-
-            <div className={styles.criteriaTitle}>Fees (per month)</div>
-            <Form.Range min={"0"} max={"5000"} onChange={(e)=>setFees(e.target.value)}/>
-            <div className={styles.para}>Fees per month: <b>{`$${fees}`}</b></div>
-        
-        </div> */}
 
         {/* Slider for min and max fees criteria*/}
         <div className={styles.criteriaTitle}>Price Range ($)</div>
@@ -254,6 +239,18 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
     </div>
   )
+}
+
+//styling of bootstrap components
+const dropdownbtn = 
+{
+    backgroundColor: "#FC575E",
+    paddingTop: "8px",
+    paddingBottom: "8px",
+    minWidth: "100%",
+    borderRadius:  "3px",
+    paddingLeft: "10px",
+    paddingRight: "10px",
 }
 
 export default FilterBar

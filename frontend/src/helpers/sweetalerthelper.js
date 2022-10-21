@@ -13,6 +13,19 @@ const successAlert = (title, text) => {
   });
 };
 
+const successAlertFast = (title, text) => {
+  Swal.fire({
+    title: title,
+    text: text,
+    icon: "success",
+    iconColor: "#40916c",
+    showCloseButton: false,
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+  });
+};
+
 const failedAlert = (title, text) => {
   Swal.fire({
     title: title,
@@ -61,4 +74,4 @@ const warningAlert = (title, text) => {
     timerProgressBar: true,
   });
 };
-export { successAlert, failedAlert, resetInfoAlert, warningAlert, infoAlert };
+export { successAlert, successAlertFast, failedAlert, resetInfoAlert, warningAlert, infoAlert };

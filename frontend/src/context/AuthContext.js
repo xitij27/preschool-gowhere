@@ -6,7 +6,7 @@ const AuthContext = React.createContext();
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
 
-    const [currentUser, setCurrentUser] = useState();
+    const [currentUser, setCurrentUser] = useState({"email": null});
     const [authenticated,setAuthenticated] = useState(false);
     const [curUsername, setCurUsername] = useState("");
     const [userLocation, setUserLocation] = useState({});

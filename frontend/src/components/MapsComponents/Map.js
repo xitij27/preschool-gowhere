@@ -9,6 +9,8 @@ import styles from "../../styles/mapStyles/map.module.css";
 
 //import context
 import {useAuth} from "../../context/AuthContext";
+import { useFilter } from '../../context/FilterContext';
+import axios from 'axios';
 
 //api key 
 const apiKey ='';
@@ -16,20 +18,31 @@ const apiKey ='';
 //locations
 const centerSingapore = {lat: 1.352 , lng:103.820 };
 
-//dummy data for markers of preschools
-const preschools = [{"location": {lat: 1.3936324613004758, lng:  103.90174541069825 }, "preschool name":  "Little Footprints Preschool" , rating: "4/5"},
-                    {"location": {lat: 1.353028461065668,  lng: 103.94281363921853 , }, "preschool name":  "MindChamps Preschool" , rating: "3/5"},
-                    {"location": {lat: 1.327393293186638, lng: 103.93235807110402 }, "preschool name":   "SuperGenius Preschool ", rating: "5/5"},
-                    {"location": {lat: 1.3814505095165257, lng: 103.94571206208387 }, "preschool name":   "Learning Adventure Preschool", rating: "4/5"}]
 
 const Map = () => {
 
-    //useContext
+    //context variables
+    const {currentUser} = useAuth();
+    const {filteredPreschools} = useFilter();
+
+    //state variables for this component
     const [selectedSchool, setSelectedSchool] = useState(null);
     
+    //check if gmaps is loaded
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: apiKey ,
     })
+
+
+    //functions
+    const sendEmailReport = () =>
+    {
+        console.log("sending email report!");
+
+        //if successful show success modal
+        successAlert("Email report successfully sent!", `Full Report of preschool sent to : ${currentUser.email}! `)
+
+    }
 
 
     if (!isLoaded)
@@ -40,13 +53,15 @@ const Map = () => {
         </div>)
     }
 
+
+
     return (
         <div style={{height: "100vh", maxWidth: "100vw"}}>
             <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "100%"}}>
-                {preschools.map((preschool,index)=>{
+                {filteredPreschools !== null ? filteredPreschools.map((preschool,index)=>{
                     return(
                         <div className='preschool' key={index}>
-                            <Marker key={index} position={preschool.location} 
+                            <Marker key={index} position={{lat: preschool.latitude,lng: preschool.longitude}} 
                             onClick={()=>{
                                 setSelectedSchool(preschool);
                             }} />
@@ -54,15 +69,16 @@ const Map = () => {
                             
                         </div>
                     )
-                })}
+                }): <></>}
 
             {selectedSchool && (
-                <InfoWindow className={styles.infoWindow} position={selectedSchool.location} onCloseClick ={()=>{setSelectedSchool(null)}}>
-                    <>
+                <InfoWindow position={{lat: selectedSchool.latitude,lng: selectedSchool.longitude}} onCloseClick ={()=>{setSelectedSchool(null)}}>
+                    <div className={styles.infoWindow}>
                         <p className={styles.title}>Preschool information</p>
-                        <p className={styles.para}><b>Name: </b>{selectedSchool['preschool name']}</p>
-                        <p className={styles.para}><b>Rating: </b>{selectedSchool.rating}</p>
-                    </>
+                        <p className={styles.para}><b>Center Code: </b>{selectedSchool['centre_code']}</p>
+                        <p className={styles.para}><b>Center Name: </b>{selectedSchool['centre_name']}</p>
+                        <div className='btn' onClick={sendEmailReport} id ={styles.emailReport}>Request Email report</div>
+                    </div>
                 </InfoWindow>
             )}
             </GoogleMap>
