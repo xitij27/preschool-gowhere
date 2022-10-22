@@ -33,6 +33,12 @@ const LoginComponent = () => {
   //navigate
   const navigate = useNavigate();
 
+  const clearInputFields = () =>
+  {
+    emailRef.current.value = "";
+    passwordRef.current.value = "";
+  }
+
   const handleSubmit = async(e)=>
   {
     e.preventDefault();
@@ -58,11 +64,13 @@ const LoginComponent = () => {
       }
       else
       {
-        failedAlert("Login unsuccessful!", res.data);
+        failedAlert("Login unsuccessful!", "Did u enter the correct email and password?");
+        clearInputFields();
       }
     })
     .catch((err)=>{
-      failedAlert("Login unsuccessful!", "Oops something went wrong. Did you entered the correct email/ password?");
+      failedAlert("Login unsuccessful!", "Oops something went wrong!");
+      clearInputFields();
     });
     };
 

@@ -33,7 +33,15 @@ const SignupComponent = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  //navigation using react router
   const navigate = useNavigate();
+
+  const clearInputFields = ()=>
+  {
+    emailRef.current.value = "";
+    confirmPasswordRef.current.value = "";
+    passwordRef.current.value = "";
+  }
 
   const handleSubmit = async(e)=>
   {
@@ -61,7 +69,7 @@ const SignupComponent = () => {
         
         const user = currentUser;
         user.email = emailRef.current.value;
-        localStorage.setItem(`${user.email}`, JSON.stringify("true"));  //setAuthenticated(true);
+        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
         setCurrentUser(user);
         navigate("/app/home");
       }
@@ -77,9 +85,27 @@ const SignupComponent = () => {
 
   const sendOtp = () =>
   {
+    
+    if (emailRef.current.value ==="" || passwordRef.current.value ==="" || confirmPasswordRef.current.value === "")
+    {
+      failedAlert("Input fields not filled up!", "Please check that you have filled up both the email and password fields!");
+      return;
+    }
+    //check for user signup inputs
+    if (passwordRef.current.value !== confirmPasswordRef.current.value )
+    {
+      
+      failedAlert("Passwords do not match!", "Please try again before generating OTP!");
+      passwordRef.current.value = "";
+      confirmPasswordRef.current.value = "";
+      return;
+    }
+
+
     console.log(emailRef.current.value);
     axios.post("http://localhost:3005/api/sendOTP",{"email": emailRef.current.value})
     .then((res)=>{console.log(res.data);    
+    clearInputFields();
     successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
     })
     .catch((err)=>{console.log(err);
