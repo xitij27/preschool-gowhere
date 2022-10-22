@@ -47,9 +47,9 @@ const LoginComponent = () => {
       if (res.data == "Succesfully logged in!")
       {
         successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
-        setAuthenticated(true);
         const user = currentUser;
         user.email = emailInput;
+        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
         setCurrentUser(user);
         
         //for loading success alert 2s

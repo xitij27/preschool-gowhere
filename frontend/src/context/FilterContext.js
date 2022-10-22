@@ -20,7 +20,6 @@ export const FilterProvider = ({ children }) => {
     const [transportInput,setTransportInput] = useState("Default");
     const [exOperatingHoursInput,setExOperatingHoursInput] = useState("Default")
 
-
     //variables for dropdown titles (for display purposes)
     const [foodTitle,setFoodTitle] = useState("Select food type");
     const [secondlangTitle,setSecondlangTitle] = useState("Choose Second Language");
@@ -33,7 +32,7 @@ export const FilterProvider = ({ children }) => {
         //filtered preschools
         filteredPreschools,
         setFilteredPreschools,
-        
+
         //crieria values chosen by user 
         criterias,
         setCriterias,

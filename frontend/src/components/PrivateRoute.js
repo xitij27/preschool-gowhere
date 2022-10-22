@@ -7,6 +7,10 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function PrivateRoute() {
-  const { authenticated,currentUser } = useAuth();
-  return authenticated ? <Outlet /> : <Navigate to="/home" />;
+
+  const { currentUser } = useAuth();
+
+  const authenticated = JSON.parse(localStorage.getItem(`Authenticated`));
+  console.log((authenticated),"YOOO");
+  return (authenticated === "true") ? <Outlet /> : <Navigate to="/home" />;
 }

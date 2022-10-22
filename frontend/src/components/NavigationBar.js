@@ -19,7 +19,7 @@ import { successAlert, failedAlert } from "../helpers/sweetalerthelper";
 
 const NavigationBar = () => {
 
-  const {setAuthenticated} = useAuth();
+  const {setAuthenticated,currentUser} = useAuth();
   const {setFilteredPreschools} = useFilter();
 
   
@@ -44,7 +44,8 @@ const NavigationBar = () => {
                     setAuthenticated(false);
                     setFilteredPreschools(null);
                     successAlert("Logged out successfully", "Return to where you were by logging back in!")
-                                          
+                    localStorage.setItem("Authenticated", JSON.stringify("false"));  //setAuthenticated(true);
+                      
                   }} 
                   style ={{ textDecoration: "none", fontWeight: "400", color:  "white", fontSize: "18px"}} className="navbarlink" to="/login">Logout</Link></Nav.Link>
 

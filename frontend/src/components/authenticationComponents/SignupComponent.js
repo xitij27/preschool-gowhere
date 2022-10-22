@@ -57,9 +57,11 @@ const SignupComponent = () => {
       if (res.data === "Account succesfully created!")
       {
         successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
-        setAuthenticated(true);
+        //setAuthenticated(true);
+        
         const user = currentUser;
         user.email = emailRef.current.value;
+        localStorage.setItem(`${user.email}`, JSON.stringify("true"));  //setAuthenticated(true);
         setCurrentUser(user);
         navigate("/app/home");
       }
