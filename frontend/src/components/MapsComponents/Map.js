@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { useJsApiLoader,GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
 
 //sweetalert notification
-import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
+import { successAlert, failedAlert, successAlertFast } from "../../helpers/sweetalerthelper";
 
 // import css styles
 import styles from "../../styles/mapStyles/map.module.css";
@@ -23,7 +23,7 @@ const Map = () => {
 
     //context variables
     const {currentUser} = useAuth();
-    const {filteredPreschools} = useFilter();
+    const {filteredPreschools,criterias} = useFilter();
 
     //state variables for this component
     const [selectedSchool, setSelectedSchool] = useState(null);
@@ -32,17 +32,6 @@ const Map = () => {
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: apiKey ,
     })
-
-
-    //functions
-    const sendEmailReport = () =>
-    {
-        console.log("sending email report!");
-
-        //if successful show success modal
-        successAlert("Email report successfully sent!", `Full Report of preschool sent to : ${currentUser.email}! `)
-
-    }
 
 
     if (!isLoaded)
@@ -58,7 +47,8 @@ const Map = () => {
     return (
         <div style={{height: "100vh", maxWidth: "100vw"}}>
             <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "100%"}}>
-                {filteredPreschools !== null ? filteredPreschools.map((preschool,index)=>{
+                {console.log(filteredPreschools)}
+                {(filteredPreschools)? filteredPreschools.map((preschool,index)=>{
                     return(
                         <div className='preschool' key={index}>
                             <Marker key={index} position={{lat: preschool.latitude,lng: preschool.longitude}} 
@@ -77,7 +67,7 @@ const Map = () => {
                         <p className={styles.title}>Preschool information</p>
                         <p className={styles.para}><b>Center Code: </b>{selectedSchool['centre_code']}</p>
                         <p className={styles.para}><b>Center Name: </b>{selectedSchool['centre_name']}</p>
-                        <div className='btn' onClick={sendEmailReport} id ={styles.emailReport}>Request Email report</div>
+                        {/* <div className='btn' onClick={sendEmailReport} id ={styles.emailReport}>Request Email report</div> */}
                     </div>
                 </InfoWindow>
             )}

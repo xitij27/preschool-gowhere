@@ -21,7 +21,7 @@ import {useAuth} from "../../context/AuthContext";
 const SignupComponent = () => {
 
   //context state variables (for auth)
-  const {setAuthenticated} = useAuth();
+  const {setAuthenticated,currentUser, setCurrentUser} = useAuth();
 
 
   //use State variables
@@ -50,7 +50,6 @@ const SignupComponent = () => {
     }
 
     //post user data to backeend
-    console.log(otpRef.current.value)
     axios.post("http://localhost:3005/api/signup",{"password": passwordRef.current.value,"email": emailRef.current.value, "OTP": otpRef.current.value})
     .then((res)=>{
       console.log(res.data);
@@ -59,6 +58,9 @@ const SignupComponent = () => {
       {
         successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
         setAuthenticated(true);
+        const user = currentUser;
+        user.email = emailRef.current.value;
+        setCurrentUser(user);
         navigate("/app/home");
       }
       else

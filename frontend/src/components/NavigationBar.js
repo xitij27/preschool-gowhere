@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 
 //import context
 import {useAuth} from "../context/AuthContext";
+import {useFilter} from "../context/FilterContext";
+
 
 import { successAlert, failedAlert } from "../helpers/sweetalerthelper";
 
@@ -18,6 +20,7 @@ import { successAlert, failedAlert } from "../helpers/sweetalerthelper";
 const NavigationBar = () => {
 
   const {setAuthenticated} = useAuth();
+  const {setFilteredPreschools} = useFilter();
 
   
   return (
@@ -39,6 +42,7 @@ const NavigationBar = () => {
                   <Nav.Link ><Link onClick={()=>
                   {
                     setAuthenticated(false);
+                    setFilteredPreschools(null);
                     successAlert("Logged out successfully", "Return to where you were by logging back in!")
                                           
                   }} 

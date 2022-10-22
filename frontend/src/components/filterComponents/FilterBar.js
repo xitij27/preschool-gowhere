@@ -14,7 +14,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 
 //import utilities/criterias
 
-import {criterias} from "../../utilities/criterias"
+import {criteriaOptions} from "../../utilities/criterias"
 
 //import context
 import {useAuth} from "../../context/AuthContext";
@@ -31,31 +31,52 @@ import { useFilter } from '../../context/FilterContext';
 
 const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
-
-    //criterias
-    const [location,setLocation] = useState(50);
-    const [fees,setFees] = useState(5000);
-    const [minFees,setMinFees] = useState("1000");
-    const [maxFees,setMaxFees] = useState("4000");
-    const [foodInput,setFoodInput] = useState("Default");
-    const [second_langInput,setSecond_langInput] = useState("Chinese");
-    const [serviceInput,setServiceInput] = useState("Default" );
-    const [sparkInput,setSparkInput] = useState("Default");
-    const [transportInput,setTransportInput] = useState("Default");
-    const [exOperatingHoursInput,setExOperatingHoursInput] = useState("Default")
-
-
-    //variables for dropdown titles (for display purposes)
-    const [foodTitle,setFoodTitle] = useState("Select food type");
-    const [secondlangTitle,setSecondlangTitle] = useState("Choose Second Language");
-    const [sparkTitle,setSparkTitle] = useState("Availability");
-    const [transportTitle,setTransportTitle] = useState("Availability");
-    const [exOperatingHoursInputTitle,setExOperatingHoursInputTitle] = useState("Availability");
-    const [serviceTitle,setServiceTitle] = useState("Services");
-
     //context state variables
-    const { userLocation,basicCriterias } = useAuth();
-    const {filteredPreschools,setFilteredPreschools} = useFilter();
+    const { userLocation,basicCriterias,currentUser } = useAuth();
+    const {
+            filteredPreschools,setFilteredPreschools,criterias,setCriterias,
+            //criteria options for filterbars
+            location,setLocation,
+            fees,setFees,
+            minFees,setMinFees,
+            maxFees,setMaxFees,
+            foodInput,setFoodInput,
+            second_langInput,setSecond_langInput,
+            serviceInput,setServiceInput,
+            sparkInput,setSparkInput,
+            transportInput,setTransportInput,
+            exOperatingHoursInput,setExOperatingHoursInput,
+
+            //criteria titles for ui purposes
+            foodTitle,setFoodTitle,
+            secondlangTitle,setSecondlangTitle,
+            sparkTitle,setSparkTitle,
+            transportTitle,setTransportTitle,
+            exOperatingHoursInputTitle,setExOperatingHoursInputTitle,
+            serviceTitle,setServiceTitle,
+        } = useFilter();
+
+    const sendEmailReport = () =>
+    {
+        if (criterias === null)
+        {
+            failedAlert("Please try again!", "You have not searched for any preschools yet!");
+            return;
+        }
+
+        console.log("sending email report!");
+        //call backend api to send email report
+        const bodyData = criterias;
+        bodyData.email = currentUser.email;
+        axios.post("http://localhost:3005/api/filteremail",bodyData)
+        .then((res)=> {
+            console.log(res.data);
+            successAlertFast("Email report successfully sent!", `Full Report of preschool sent to : ${currentUser.email}! `)
+        })
+        .catch((err)=> failedAlert("Something went wrong!"," Please try again!"))
+
+    }
+
 
 
     const handleFilter =()=>
@@ -81,7 +102,15 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         axios.post("http://localhost:3005/api/filter",criterias)
         .then((res)=>{
             //console.log(res.data);
-            setFilteredPreschools(res.data);
+            setCriterias(criterias);
+            if (res.data === null || res.data === undefined || res.data=== [] )
+            {
+                setFilteredPreschools([]);
+            }
+            else
+            {
+                setFilteredPreschools(res.data);
+            }
             setExpandFilterBar(!expandFilterBar);
             successAlertFast("Loading Filters", "Searching for the most suitable preschools for you!");
         })
@@ -143,7 +172,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className={styles.dropdownmenu} >
-                    {criterias["second_lang"].map((lang,index)=>{
+                    {criteriaOptions["second_lang"].map((lang,index)=>{
                         return <Dropdown.Item key={index} onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
 
                     })}
@@ -162,7 +191,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setFoodInput(e)} >
                     
-                    {criterias["food"].map((food,index)=>{
+                    {criteriaOptions["food"].map((food,index)=>{
                         return <Dropdown.Item key={index} onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
 
                     })}
@@ -223,7 +252,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setServiceInput(e)} >
                     
-                    {criterias["service"].map((service,index)=>{
+                    {criteriaOptions["service"].map((service,index)=>{
                         return <Dropdown.Item onClick={()=>{setServiceInput(service); setServiceTitle(service)}} key={index}>{service}</Dropdown.Item>
 
                     })}
@@ -234,6 +263,8 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         
 
         <div className = {styles.filterButton + " " + "btn"} onClick={handleFilter}>Filter</div>
+        
+        <div className = {styles.filterButton + " " + "btn"} onClick={sendEmailReport}>Request Report</div>
 
 
 
