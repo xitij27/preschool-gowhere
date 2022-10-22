@@ -152,9 +152,9 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
             <div className={styles.rangeInput}>
                 <div style={{color: "#FC575E", fontWeight: "500"}}>Adjust Min Price</div>
-                <input type="range" min="0" max="5000" value={minFees} onChange={e => setMinFees(e.target.value)} className={styles.rangeMin}></input>
+                <input type="range" min="0" max="4100" value={minFees} onChange={e => setMinFees(e.target.value)} className={styles.rangeMin}></input>
                 <div style={{color: "#FC575E", fontWeight: " 500"}}>Adjust Max price</div>
-                <input type="range" min="0" max="5000" value= {maxFees} onChange={e => setMaxFees(e.target.value)}  className={styles.rangeMax}></input>
+                <input type="range" min="0" max="4100" value= {maxFees} onChange={e => setMaxFees(e.target.value)}  className={styles.rangeMax}></input>
             </div>
 
 

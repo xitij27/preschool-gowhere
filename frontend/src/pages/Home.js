@@ -12,7 +12,6 @@ import styles from "../styles/homeStyles/home.module.css";
 
 //import icons
 import {MdOutlineMenu} from "react-icons/md"
-import { Mapsfunc } from '../components/Maps/Maps.js';
 const Home = () => {
 
   const [expandFilterBar, setExpandFilterBar] = useState(false);

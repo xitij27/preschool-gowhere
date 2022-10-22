@@ -11,8 +11,8 @@ export const FilterProvider = ({ children }) => {
     //criterias
     const [location,setLocation] = useState(50);
     const [fees,setFees] = useState(5000);
-    const [minFees,setMinFees] = useState("1000");
-    const [maxFees,setMaxFees] = useState("4000");
+    const [minFees,setMinFees] = useState("500");
+    const [maxFees,setMaxFees] = useState("1500");
     const [foodInput,setFoodInput] = useState("Default");
     const [second_langInput,setSecond_langInput] = useState("Chinese");
     const [serviceInput,setServiceInput] = useState("Default" );
