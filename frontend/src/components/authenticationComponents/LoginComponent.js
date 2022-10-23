@@ -55,8 +55,9 @@ const LoginComponent = () => {
         successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
         const user = currentUser;
         user.email = emailInput;
-        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
         setCurrentUser(user);
+        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
+        localStorage.setItem("UserData", JSON.stringify({"email": emailInput})); // store user email into localstorage
         
         //for loading success alert 2s
         await sleep(2000);

@@ -12,7 +12,7 @@ export const FilterProvider = ({ children }) => {
     const [location,setLocation] = useState(50);
     const [fees,setFees] = useState(5000);
     const [minFees,setMinFees] = useState("500");
-    const [maxFees,setMaxFees] = useState("1500");
+    const [maxFees,setMaxFees] = useState("2000");
     const [foodInput,setFoodInput] = useState("Default");
     const [second_langInput,setSecond_langInput] = useState("Chinese");
     const [serviceInput,setServiceInput] = useState("Default" );

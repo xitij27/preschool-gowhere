@@ -51,9 +51,7 @@ const SignupComponent = () => {
     //proceed to do more form validation here
     if (passwordRef.current.value !== confirmPasswordRef.current.value )
     {
-
       failedAlert("Sign up unsuccessful!", "Passwords do not match. Please try again!") 
-      //console.log(passwordRef.current.value,confirmPasswordRef.current.value)
       return;
     }
 
@@ -66,11 +64,14 @@ const SignupComponent = () => {
       {
         successAlert("Registration Success", "Succesfully registered an account! Redirecting you to home page!");
         //setAuthenticated(true);
-        
         const user = currentUser;
         user.email = emailRef.current.value;
-        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
+        console.log(user);
         setCurrentUser(user);
+        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
+        localStorage.setItem("UserData", JSON.stringify({"email": emailRef.current.value})); // store user email into localstorage
+
+
         navigate("/app/home");
       }
       else
@@ -105,7 +106,7 @@ const SignupComponent = () => {
     console.log(emailRef.current.value);
     axios.post("http://localhost:3005/api/sendOTP",{"email": emailRef.current.value})
     .then((res)=>{console.log(res.data);    
-    clearInputFields();
+    // clearInputFields();
     successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
     })
     .catch((err)=>{console.log(err);

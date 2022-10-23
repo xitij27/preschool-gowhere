@@ -130,7 +130,7 @@
     position: relative;
 
 }
-.rangeInput input
+.rangeInput input, .slider input
 {
     height: 5px;
     width: 100%;

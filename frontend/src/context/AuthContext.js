@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
     const [authenticated,setAuthenticated] = useState(false);
     const [curUsername, setCurUsername] = useState("");
     const [userLocation, setUserLocation] = useState({});
-
     const [basicCriterias, setBasicCriterias] = useState(
     {
         "citizenship": "SC",
@@ -20,6 +19,7 @@ export const AuthProvider = ({ children }) => {
     ); //basic criterias will be set by user once user signs up
 
 
+    //set current location of user
     useEffect(()=>{
         navigator.geolocation.getCurrentPosition(function(position) {
             console.log("Latitude is :", position.coords.latitude);
@@ -28,6 +28,16 @@ export const AuthProvider = ({ children }) => {
             setUserLocation(location);
         });
     },[])
+
+    //set email of user to the persistent email data(stored in localStorage) upon refresh
+    
+    useEffect(()=>
+    {
+        const userData = JSON.parse(localStorage.getItem("UserData"));
+        userData ? setCurrentUser(userData) : setCurrentUser({"email": null});
+        console.log("used local storage")
+    },[])
+
     
 
     const value = {
