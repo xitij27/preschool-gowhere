@@ -48,6 +48,9 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             sparkInput,setSparkInput,
             transportInput,setTransportInput,
             exOperatingHoursInput,setExOperatingHoursInput,
+            citizenshipInput,setCitizenshipInput,
+            levelInput,setLevelInput,
+            typeServiceInput,setTypeServiceInput,
 
             //criteria titles for ui purposes
             foodTitle,setFoodTitle,
@@ -56,6 +59,11 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             transportTitle,setTransportTitle,
             exOperatingHoursInputTitle,setExOperatingHoursInputTitle,
             serviceTitle,setServiceTitle,
+            citizenshipInputTitle,setCitizenshipInputTitle,
+            levelInputTitle,setLevelInputTitle,
+            typeServiceInputTitle,setTypeServiceInputTitle,
+
+
     } = useFilter();
 
     const sendEmailReport = () =>
@@ -66,11 +74,11 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             "second_lang": second_langInput,
             "spark": sparkInput,
             "transport": transportInput,
-            "citizenship": basicCriterias.citizenship,
-            "level": basicCriterias.level,
+            "citizenship": citizenshipInput,
+            "level": levelInput,
             "max_fee": maxFees,
             "min_fee": minFees,
-            "type_service": basicCriterias["type_service"],
+            "type_service": typeServiceInput,
             "service": serviceInput,
             "lat": userLocation.lat,
             "long": userLocation.lng,
@@ -97,7 +105,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     }
 
 
-
     const handleFilter =()=>
     {
         const criterias = 
@@ -106,16 +113,17 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             "second_lang": second_langInput,
             "spark": sparkInput,
             "transport": transportInput,
-            "citizenship": basicCriterias.citizenship,
-            "level": basicCriterias.level,
+            "citizenship": citizenshipInput,
+            "level": levelInput,
             "max_fee": maxFees,
             "min_fee": minFees,
-            "type_service": basicCriterias["type_service"],
+            "type_service": typeServiceInput,
             "service": serviceInput,
             "lat": userLocation.lat,
             "long": userLocation.lng,
             "distance": location
         }
+        console.log(criterias);
         //check if user enabled location services
         if (criterias.lat === undefined || criterias.long === undefined)
         {
@@ -148,11 +156,11 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 		duration: 0.45,
 		}}
 	>
-		  
+    
     <div className={styles.filterbar}>
         
         <div className="close" style={{float: "right", margin:"0px"}} onClick={()=> setExpandFilterBar(false)}>
-			<AiFillCloseCircle size ={30} color={"#FC575E"}  />
+            <AiFillCloseCircle size ={30} color={"#FC575E"}  />
         </div>
         {/* title "filter preschools" */}
         <div className={styles.title}>Filter Preschools</div>
@@ -192,6 +200,58 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
         {/* other criterias */}
 
+                {/* Basic criterias for citizenship, level and type_service */}
+                <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Citizenship</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{citizenshipInputTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setCitizenshipInput(e)} >
+                    
+                    {criteriaOptions["citizenship"].map((citizenshipType,index)=>{
+                        return <Dropdown.Item onClick={()=>{setCitizenshipInput(citizenshipType);setCitizenshipInputTitle(citizenshipType);}} key={index}>{citizenshipType}</Dropdown.Item>
+
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+        
+        <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Level</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{levelInputTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setLevelInput(e)} >
+                    
+                    {criteriaOptions["level"].map((levelType,index)=>{
+                        return <Dropdown.Item onClick={()=>{setLevelInput(levelType);setLevelInputTitle(levelType);}} key={index}>{levelType}</Dropdown.Item>
+
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+        
+        <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Type of Services</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{typeServiceInputTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setTypeServiceInput(e)} >
+                    
+                    {criteriaOptions["typeService"].map((typeServiceType,index)=>{
+                        return <Dropdown.Item onClick={()=>{setTypeServiceInput(typeServiceType);setTypeServiceInputTitle(typeServiceType);}} key={index}>{typeServiceType}</Dropdown.Item>
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+
+
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Second Language Offered</div>
             <Dropdown className={styles.dropdownbtn} >
@@ -201,7 +261,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
                 <Dropdown.Menu className={styles.dropdownmenu} >
                     {criteriaOptions["second_lang"].map((lang,index)=>{
-						return <Dropdown.Item key={index} onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
+                        return <Dropdown.Item key={index} onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
 
                     })}
                 </Dropdown.Menu>
@@ -214,13 +274,13 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             <div className={styles.criteriaTitle}>Food</div>
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
-					<div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{foodTitle}</div>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{foodTitle}</div>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setFoodInput(e)} >
                     
                     {criteriaOptions["food"].map((food,index)=>{
-						return <Dropdown.Item key={index} onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
+                        return <Dropdown.Item key={index} onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
 
                     })}
                 </Dropdown.Menu>
@@ -260,7 +320,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Spark Certified</div>
             <Dropdown className={styles.dropdownbtn}>
-				<Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
                     <div style={{display: "inline-block", marginRight: "15px"}}> {sparkTitle}</div>
                 </Dropdown.Toggle>
 
@@ -281,14 +341,14 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setServiceInput(e)} >
                     
                     {criteriaOptions["service"].map((service,index)=>{
-						return <Dropdown.Item onClick={()=>{setServiceInput(service); setServiceTitle(service)}} key={index}>{service}</Dropdown.Item>
-						
+                        return <Dropdown.Item onClick={()=>{setServiceInput(service); setServiceTitle(service)}} key={index}>{service}</Dropdown.Item>
+
                     })}
                 </Dropdown.Menu>
             </Dropdown>
         </div>
-
         
+
 
         <div className = {styles.filterButton + " " + "btn"} onClick={handleFilter}>Filter</div>
         
@@ -304,7 +364,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 //styling of bootstrap components
 const dropdownbtn = 
 {
-	backgroundColor: "#FC575E",
+    backgroundColor: "#FC575E",
     paddingTop: "8px",
     paddingBottom: "8px",
     minWidth: "100%",
