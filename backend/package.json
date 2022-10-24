@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Both these functions have the same input but return different values\r ### Parameters\r This is a list containing the parameters and the possible inputs for each of them\r 1) food : [\"No Pork No Lard with No Beef (without Certification from MUIS but from Halal Sources)\",\r        \"No Pork No Lard with No Beef (from Non-Halal Sources)\",\r        \"Halal Food With No Beef (with Certification from MUIS)\",\r        \"No Pork No Lard with Beef (without Certification from MUIS but from Halal Sources)\",\r        \"Others\", \"No Pork No Lard with Beef (from Non-Halal Sources)\",\r        \"Halal Food With Beef (with Certification from MUIS)\",\r        \"Vegetarian\", \"Default\"]  \r 2) spark : [\"Yes\", \"Default\"]  \r 3) transport : [\"Yes\", \"Default\"]  \r 4) service : [\"CC\", \"KN\", \"EYC-DS\", \"DS\", \"EYC\", \"Default\"]  \r 5) second_lang : [\"Chinese\", \"Malay\", \"Tamil\", \"French\", \"Arabic\", \"Russian\", \"German\", \"Japanese\", \"Hindi\", \"Korean\", \"Punjabi\"]  \r 6) citizenship : [\"SC\", \"SPR\", \"Others\"]   \r 7) level : [\"Infant (2 to 18 mths)\", \"Pre-Nursery (3 yrs old)\", \"Nursery (4 yrs old)\", \"Playgroup (18 mths to 2 yrs old)\", \"Kindergarten 1 (5 yrs old)\", \"Kindergarten 2 (6 yrs old)\"]   \r 8) max_fee : (int)  \r 9) min_fee : (int)  \r 10) type_service : [\"Full Day\", \"FEP PM\", \"FEP AM\", \"Session 1\", \"Session 2\", \"Emergency Care\", \"Flexi Care 1\", \"Half Day AM\", \"Half Day PM\", \"Flexi Care 2\", \"Flexi Care 3\"]   \r 11) user_lat : Latitude of user   \r 12) user_long : Longitude of user  \r 13) distance : distance (in km) that user wants to travel",
+  "main": "APIs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node APIs.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CZ3002-Advanced-Software-Egineeringg/Pre-School-Go-Where.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CZ3002-Advanced-Software-Egineeringg/Pre-School-Go-Where/issues"
+  },
+  "homepage": "https://github.com/CZ3002-Advanced-Software-Egineeringg/Pre-School-Go-Where#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.4",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemailer": "^6.8.0"
+  }
+}

@@ -230,7 +230,7 @@ app.post('/api/updatepassword', (req,res) => {
                const {data} = await supabase.rpc('updatepassword', {user_email:email,
                user_password:password});
                console.log("succesful");
-               res.send("Sucessfully updated!");
+               res.send("Successfully updated!");
                }
                else{
                     console.log("OTP doesn't match");
@@ -340,7 +340,7 @@ app.post('/api/getbookmark',(req,res)=> {
      })();
      
 })
- const port = process.env.PORT || 3005;
+ const port = 3005;
  app.listen(port, () => console.log("Listening on: " + port));
  /*{
     "food":"Default",
