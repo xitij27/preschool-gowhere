@@ -132,7 +132,22 @@ let { data, error } = await supabase
   })
 ```
 
+## 7) updatebookmark
+### Parameters
+1) user_email
+2) user_bookmark : (json string)
+### Client API
+```
+let { data, error } = await supabase
+  .rpc('updatebookmark', {
+    user_bookmark, 
+    user_email
+  })
+
+if (error) console.error(error)
+else console.log(data)
+```
+
 # TODO
 1) ContactDetails (For sending emails)
-2) Account Database (How to store bookmarks using a json string)
   
