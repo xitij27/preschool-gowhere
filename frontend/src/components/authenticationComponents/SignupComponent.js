@@ -71,7 +71,6 @@ const SignupComponent = () => {
         localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
         localStorage.setItem("UserData", JSON.stringify({"email": emailRef.current.value})); // store user email into localstorage
 
-
         navigate("/app/home");
       }
       else
