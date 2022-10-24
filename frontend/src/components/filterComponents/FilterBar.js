@@ -58,7 +58,24 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     } = useFilter();
 
     const sendEmailReport = () =>
-    {
+	{
+		const criterias = 
+        {
+            "food": foodInput ,
+            "second_lang": second_langInput,
+            "spark": sparkInput,
+            "transport": transportInput,
+            "citizenship": basicCriterias.citizenship,
+            "level": basicCriterias.level,
+            "max_fee": maxFees,
+            "min_fee": minFees,
+            "type_service": basicCriterias["type_service"],
+            "service": serviceInput,
+            "lat": userLocation.lat,
+            "long": userLocation.lng,
+            "distance": location
+		}
+		setCriterias(criterias)
         if (criterias === null)
         {
             failedAlert("Please try again!", "You have not searched for any preschools yet!");
