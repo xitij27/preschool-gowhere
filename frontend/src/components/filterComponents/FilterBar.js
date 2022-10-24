@@ -6,6 +6,7 @@ import React, { useRef,useState } from "react";
 
 // react routing import
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { successAlert, failedAlert, successAlertFast } from "../../helpers/sweetalerthelper";
 
@@ -139,11 +140,19 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
 
   return (
-    
+	<motion.div
+		initial={{ x: -250, opacity: 0 }}
+		animate={{ x: 0, opacity: 1 }}
+		transition={{
+		ease: "easeOut",
+		duration: 0.45,
+		}}
+	>
+		  
     <div className={styles.filterbar}>
         
         <div className="close" style={{float: "right", margin:"0px"}} onClick={()=> setExpandFilterBar(false)}>
-            <AiFillCloseCircle size ={30} color={"#FC575E"}  />
+			<AiFillCloseCircle size ={30} color={"#FC575E"}  />
         </div>
         {/* title "filter preschools" */}
         <div className={styles.title}>Filter Preschools</div>
@@ -192,7 +201,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
                 <Dropdown.Menu className={styles.dropdownmenu} >
                     {criteriaOptions["second_lang"].map((lang,index)=>{
-                        return <Dropdown.Item key={index} onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
+						return <Dropdown.Item key={index} onClick={()=>{setSecond_langInput(lang);setSecondlangTitle(lang)}} >{lang}</Dropdown.Item>
 
                     })}
                 </Dropdown.Menu>
@@ -205,13 +214,13 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             <div className={styles.criteriaTitle}>Food</div>
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
-                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{foodTitle}</div>
+					<div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{foodTitle}</div>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setFoodInput(e)} >
                     
                     {criteriaOptions["food"].map((food,index)=>{
-                        return <Dropdown.Item key={index} onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
+						return <Dropdown.Item key={index} onClick={()=>{setFoodInput(food);setFoodTitle(food)}}>{food}</Dropdown.Item>
 
                     })}
                 </Dropdown.Menu>
@@ -251,7 +260,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Spark Certified</div>
             <Dropdown className={styles.dropdownbtn}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+				<Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
                     <div style={{display: "inline-block", marginRight: "15px"}}> {sparkTitle}</div>
                 </Dropdown.Toggle>
 
@@ -272,8 +281,8 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                 <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setServiceInput(e)} >
                     
                     {criteriaOptions["service"].map((service,index)=>{
-                        return <Dropdown.Item onClick={()=>{setServiceInput(service); setServiceTitle(service)}} key={index}>{service}</Dropdown.Item>
-
+						return <Dropdown.Item onClick={()=>{setServiceInput(service); setServiceTitle(service)}} key={index}>{service}</Dropdown.Item>
+						
                     })}
                 </Dropdown.Menu>
             </Dropdown>
@@ -288,13 +297,14 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
 
     </div>
+	</motion.div>
   )
 }
 
 //styling of bootstrap components
 const dropdownbtn = 
 {
-    backgroundColor: "#FC575E",
+	backgroundColor: "#FC575E",
     paddingTop: "8px",
     paddingBottom: "8px",
     minWidth: "100%",

@@ -115,6 +115,15 @@ const SignupComponent = () => {
 
   return (
     <div className={styles.signup}>
+      <motion.div
+          initial={{ x: 250, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{
+            ease: "easeOut",
+            duration: 0.8,
+          }}
+      >
+
       <Card className={styles["signup-card"]}>
             <Card.Body>
               <p className="mb-1" style={{fontSize:  "40px", fontWeight: "650", textAlign: "center"}}>Register Account</p>
@@ -158,7 +167,8 @@ const SignupComponent = () => {
                 Already have an account? <span style={{fontWeight: "600"}}><Link to="/login">Log in</Link></span>
               </div>
             </Card.Body>
-          </Card>
+        </Card>
+      </motion.div>
       
        
     </div>
