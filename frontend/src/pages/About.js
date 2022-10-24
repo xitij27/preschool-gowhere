@@ -6,21 +6,43 @@ import styles from "../styles/aboutStyles/about.module.css";
 
 //import components
 import NavigationBar from '../components/NavigationBar';
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
     <div>
         <NavigationBar id ="navbar"/>
-        <div className={styles.about}>
-            <div className={styles.banner}>
-                <div className={styles.title}>Searching for a preschool has never been easier!</div>
-                <div className={styles.para}>Every child is different. We cater to your  preferences
-                and only recommend you the most suitable ones!</div>
-                <div className={styles.buttons}>
-                    <div className={"btn" + " " + styles.button}>Get Started</div>
-                    <div className={"btn" + " " + styles["button-outline"]}>About us</div>
+          <div className={styles.about}>
+            <motion.div
+                initial={{ y: -150, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                    type: "easeOut",
+                    // stiffness: 120,
+                    duration: 0.6,
+                    delay: 0.3,
+                }}
+              >   
+                <div className={styles.banner}>
+                    <div className={styles.title}>Searching for a preschool has never been easier!</div>
+                    <div className={styles.para}>Every child is different. We cater to your  preferences
+                    and only recommend you the most suitable ones!</div>
+                    <div className={styles.buttons}>
+                        <div className={"btn" + " " + styles.button}>Get Started</div>
+                        <div className={"btn" + " " + styles["button-outline"]}>About us</div>
+                    </div>
                 </div>
-            </div>
+            </motion.div>
+            <motion.div
+                initial={{ x: 250, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                    type: "spring",
+                    stiffness: 60,
+                    duration: 0.5,
+                    delay: 0.3,
+                }}
+              >
 
             <div className={styles.boxes}>
                 <div className={styles.box}>
@@ -48,10 +70,8 @@ const About = () => {
 
                     
                 </div>
-                
-                
             </div>
-
+            </motion.div>
         </div>
     </div>
     

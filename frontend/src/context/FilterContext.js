@@ -12,13 +12,17 @@ export const FilterProvider = ({ children }) => {
     const [location,setLocation] = useState(50);
     const [fees,setFees] = useState(5000);
     const [minFees,setMinFees] = useState("500");
-    const [maxFees,setMaxFees] = useState("1500");
+    const [maxFees,setMaxFees] = useState("2000");
     const [foodInput,setFoodInput] = useState("Default");
     const [second_langInput,setSecond_langInput] = useState("Chinese");
     const [serviceInput,setServiceInput] = useState("Default" );
     const [sparkInput,setSparkInput] = useState("Default");
     const [transportInput,setTransportInput] = useState("Default");
-    const [exOperatingHoursInput,setExOperatingHoursInput] = useState("Default")
+    const [exOperatingHoursInput,setExOperatingHoursInput] = useState("Default");
+    //compulsory
+    const [citizenshipInput,setCitizenshipInput] = useState("SC");
+    const [levelInput,setLevelInput] = useState("Kindergarten 1 (5 yrs old)");
+    const [typeServiceInput,setTypeServiceInput] = useState("Full Day")
 
     //variables for dropdown titles (for display purposes)
     const [foodTitle,setFoodTitle] = useState("Select food type");
@@ -27,6 +31,10 @@ export const FilterProvider = ({ children }) => {
     const [transportTitle,setTransportTitle] = useState("Availability");
     const [exOperatingHoursInputTitle,setExOperatingHoursInputTitle] = useState("Availability");
     const [serviceTitle,setServiceTitle] = useState("Services");
+    const [citizenshipInputTitle,setCitizenshipInputTitle] = useState("Citizenship");
+    const [levelInputTitle,setLevelInputTitle] = useState("Level");
+    const [typeServiceInputTitle,setTypeServiceInputTitle] = useState("Type of service");
+
 
     const value = {
         //filtered preschools
@@ -48,6 +56,11 @@ export const FilterProvider = ({ children }) => {
         sparkInput,setSparkInput,
         transportInput,setTransportInput,
         exOperatingHoursInput,setExOperatingHoursInput,
+        citizenshipInput,setCitizenshipInput,
+        levelInput,setLevelInput,
+        typeServiceInput,setTypeServiceInput,
+
+
 
         //criteria titles for ui purposes
         foodTitle,setFoodTitle,
@@ -56,7 +69,12 @@ export const FilterProvider = ({ children }) => {
         transportTitle,setTransportTitle,
         exOperatingHoursInputTitle,setExOperatingHoursInputTitle,
         serviceTitle,setServiceTitle,
+        citizenshipInputTitle,setCitizenshipInputTitle,
+        levelInputTitle,setLevelInputTitle,
+        typeServiceInputTitle,setTypeServiceInputTitle,
+
     };
+
 
     return (
         <FilterContext.Provider value={value}>

@@ -55,8 +55,9 @@ const LoginComponent = () => {
         successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
         const user = currentUser;
         user.email = emailInput;
-        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
         setCurrentUser(user);
+        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
+        localStorage.setItem("UserData", JSON.stringify({"email": emailInput})); // store user email into localstorage
         
         //for loading success alert 2s
         await sleep(2000);
@@ -78,6 +79,16 @@ const LoginComponent = () => {
   
   return (
     <div className={styles.login}>
+      <motion.div
+          initial={{ y: -250, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            type: "spring",
+            stiffness: 180,
+            duration: 0.5,
+            delay: 0.3,
+          }}
+      >
       <Card className={styles["login-card"]}>
             <Card.Body>
               <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>Welcome Back</p>
@@ -118,7 +129,7 @@ const LoginComponent = () => {
               </div>
             </Card.Body>
           </Card>
-      
+      </motion.div>
        
     </div>
   )

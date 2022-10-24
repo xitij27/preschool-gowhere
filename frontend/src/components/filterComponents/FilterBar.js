@@ -6,6 +6,7 @@ import React, { useRef,useState } from "react";
 
 // react routing import
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { successAlert, failedAlert, successAlertFast } from "../../helpers/sweetalerthelper";
 
@@ -35,6 +36,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     const { userLocation,basicCriterias,currentUser } = useAuth();
     const {
             filteredPreschools,setFilteredPreschools,criterias,setCriterias,
+            
             //criteria options for filterbars
             location,setLocation,
             fees,setFees,
@@ -46,6 +48,9 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             sparkInput,setSparkInput,
             transportInput,setTransportInput,
             exOperatingHoursInput,setExOperatingHoursInput,
+            citizenshipInput,setCitizenshipInput,
+            levelInput,setLevelInput,
+            typeServiceInput,setTypeServiceInput,
 
             //criteria titles for ui purposes
             foodTitle,setFoodTitle,
@@ -54,10 +59,32 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             transportTitle,setTransportTitle,
             exOperatingHoursInputTitle,setExOperatingHoursInputTitle,
             serviceTitle,setServiceTitle,
-        } = useFilter();
+            citizenshipInputTitle,setCitizenshipInputTitle,
+            levelInputTitle,setLevelInputTitle,
+            typeServiceInputTitle,setTypeServiceInputTitle,
+
+
+    } = useFilter();
 
     const sendEmailReport = () =>
-    {
+	{
+		const criterias = 
+        {
+            "food": foodInput ,
+            "second_lang": second_langInput,
+            "spark": sparkInput,
+            "transport": transportInput,
+            "citizenship": citizenshipInput,
+            "level": levelInput,
+            "max_fee": maxFees,
+            "min_fee": minFees,
+            "type_service": typeServiceInput,
+            "service": serviceInput,
+            "lat": userLocation.lat,
+            "long": userLocation.lng,
+            "distance": location
+		}
+		setCriterias(criterias)
         if (criterias === null)
         {
             failedAlert("Please try again!", "You have not searched for any preschools yet!");
@@ -78,7 +105,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     }
 
 
-
     const handleFilter =()=>
     {
         const criterias = 
@@ -87,30 +113,33 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             "second_lang": second_langInput,
             "spark": sparkInput,
             "transport": transportInput,
-            "citizenship": basicCriterias.citizenship,
-            "level": basicCriterias.level,
+            "citizenship": citizenshipInput,
+            "level": levelInput,
             "max_fee": maxFees,
             "min_fee": minFees,
-            "type_service": basicCriterias["type_service"],
+            "type_service": typeServiceInput,
             "service": serviceInput,
             "lat": userLocation.lat,
             "long": userLocation.lng,
             "distance": location
         }
-        
+        console.log(criterias);
+        //check if user enabled location services
+        if (criterias.lat === undefined || criterias.long === undefined)
+        {
+            failedAlert("Filter Search unsuccessful!!", "Please check that you have enabled location services!");
+            return;
+        }
+
         //post request to backend for filter functionality
         axios.post("http://localhost:3005/api/filter",criterias)
         .then((res)=>{
             //console.log(res.data);
             setCriterias(criterias);
             if (res.data === null || res.data === undefined || res.data=== [] )
-            {
-                setFilteredPreschools([]);
-            }
+            {setFilteredPreschools([]);}
             else
-            {
-                setFilteredPreschools(res.data);
-            }
+            {setFilteredPreschools(res.data);}
             setExpandFilterBar(!expandFilterBar);
             successAlertFast("Loading Filters", "Searching for the most suitable preschools for you!");
         })
@@ -119,6 +148,14 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
 
   return (
+	<motion.div
+		initial={{ x: -250, opacity: 0 }}
+		animate={{ x: 0, opacity: 1 }}
+		transition={{
+		ease: "easeOut",
+		duration: 0.45,
+		}}
+	>
     
     <div className={styles.filterbar}>
         
@@ -131,9 +168,8 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         {/* sliders for distance from home criteria */}
         <div className= {styles.slider}>
             <div className={styles.criteriaTitle}>Location (km) </div>
-            <Form.Range min={"0"} max={"50"} onChange={(e)=>setLocation(e.target.value)}/>
+            <input type="range" min="0" max="50" value={location} onChange={(e)=>setLocation(e.target.value)} className={styles.rangeMin}></input>
             <div className={styles.para}>Distance from home: <b>{`${location} km`}</b></div>
-
         </div>
 
         {/* Slider for min and max fees criteria*/}
@@ -163,6 +199,58 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
 
         {/* other criterias */}
+
+                {/* Basic criterias for citizenship, level and type_service */}
+                <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Citizenship</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{citizenshipInputTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setCitizenshipInput(e)} >
+                    
+                    {criteriaOptions["citizenship"].map((citizenshipType,index)=>{
+                        return <Dropdown.Item onClick={()=>{setCitizenshipInput(citizenshipType);setCitizenshipInputTitle(citizenshipType);}} key={index}>{citizenshipType}</Dropdown.Item>
+
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+        
+        <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Level</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{levelInputTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setLevelInput(e)} >
+                    
+                    {criteriaOptions["level"].map((levelType,index)=>{
+                        return <Dropdown.Item onClick={()=>{setLevelInput(levelType);setLevelInputTitle(levelType);}} key={index}>{levelType}</Dropdown.Item>
+
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+        
+        <div className={styles.criteria}>
+            <div className={styles.criteriaTitle}>Type of Services</div>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
+                    <div style={{display: "inline-block", marginRight: "15px", textOverflow: "ellipsis"}}>{typeServiceInputTitle}</div>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu  className={styles.dropdownmenu} onSelect={(e)=>setTypeServiceInput(e)} >
+                    
+                    {criteriaOptions["typeService"].map((typeServiceType,index)=>{
+                        return <Dropdown.Item onClick={()=>{setTypeServiceInput(typeServiceType);setTypeServiceInputTitle(typeServiceType);}} key={index}>{typeServiceType}</Dropdown.Item>
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+
 
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Second Language Offered</div>
@@ -259,8 +347,8 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
                 </Dropdown.Menu>
             </Dropdown>
         </div>
-
         
+
 
         <div className = {styles.filterButton + " " + "btn"} onClick={handleFilter}>Filter</div>
         
@@ -269,6 +357,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
 
     </div>
+	</motion.div>
   )
 }
 
