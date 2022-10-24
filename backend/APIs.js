@@ -182,8 +182,8 @@ app.post('/api/updatepassword', (req,res) => {
                const {data} = await supabase.rpc('updatepassword', {user_email:email,
                user_password:password});
                console.log("succesful");
-               res.send("Sucessfully updated!");
-               }
+               res.send("Successfully updated!");
+             
                else{
                     console.log("OTP doesn't match");
                     res.send("Incorrect OTP. Try again.");
