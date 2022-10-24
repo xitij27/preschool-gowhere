@@ -3,6 +3,7 @@ import React, { useRef,useState } from "react";
 import { Form, Button, Alert, Card } from "react-bootstrap";
 
 import { motion } from "framer-motion";
+import CryptoJS from "crypto-js";
 
 // react routing import
 import { Link, useNavigate } from "react-router-dom";
@@ -47,7 +48,9 @@ const LoginComponent = () => {
     //Authenticate user details with backend 
     const emailInput = emailRef.current.value;
     const passwordInput = passwordRef.current.value;
-    axios.post("http://localhost:3005/api/login",{"email": emailInput,"password": passwordInput})
+    const hash = CryptoJS.SHA256(document.getElementById("password").value).toString();
+    console.log("hashed password is : ", hash);
+    axios.post("http://localhost:3005/api/login",{"email": emailInput,"password": hash})
     .then(async(res)=>{
       console.log(res);
       if (res.data == "Succesfully logged in!")
