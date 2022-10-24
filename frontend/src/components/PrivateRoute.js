@@ -11,6 +11,5 @@ export default function PrivateRoute() {
   const { currentUser } = useAuth();
 
   const authenticated = JSON.parse(localStorage.getItem(`Authenticated`));
-  console.log((authenticated),"YOOO");
   return (authenticated === "true") ? <Outlet /> : <Navigate to="/home" />;
 }

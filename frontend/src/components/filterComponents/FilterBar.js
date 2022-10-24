@@ -94,7 +94,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         .catch((err)=> failedAlert("Something went wrong!"," Please try again!"))
 
     }
-    
+
 
 
     const handleFilter =()=>
