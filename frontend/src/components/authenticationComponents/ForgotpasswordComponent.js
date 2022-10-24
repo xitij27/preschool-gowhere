@@ -1,17 +1,20 @@
 
 // import css styles
-import styles from "../../styles/authenticationStyles/signup.module.css";
+import styles from "../../styles/authenticationStyles/forgotpassword.module.css";
 
 import React, { useRef,useState } from "react";
-
+import axios from "axios";
 import { Form, Button, Alert, Card } from "react-bootstrap";
 
 import { motion } from "framer-motion";
 
 // react routing import
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate,useNavigate } from "react-router-dom";
 
 import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
+
+//import context
+import {useAuth} from "../../context/AuthContext";
 
 //custom styling objects
 const link = 
@@ -24,14 +27,24 @@ const link =
 
 const ForgotpasswordComponent = () => {
 
+  //context state variables (for auth)
+  const {setAuthenticated,currentUser, setCurrentUser} = useAuth();
+  
   const emailRef = useRef();
   const newPasswordRef = useRef();
   const newConfirmPasswordRef = useRef();
   const otpRef = useRef();
-
+  const [otpCorrect, setOtpCorrect] = useState();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  //navigation using react router
+  const navigate = useNavigate();
+  const clearInputFields = ()=>
+  {
+    emailRef.current.value = "";
+    newConfirmPasswordRef.current.value = "";
+    newPasswordRef.current.value = "";
+  }
 
   const handleSubmit = async(e)=>
   {
@@ -47,12 +60,67 @@ const ForgotpasswordComponent = () => {
       return;
     }
 
-    //post user data to backeend
-    
+    console.log("Email -> ",emailRef.current.value);
+    console.log("Pwd -> ",newPasswordRef.current.value);
+    console.log("CfmPwd -> ",newConfirmPasswordRef.current.value);
 
-    // if successfully registered
-    successAlert("Password reset successfully!");
+    //post user data to backeend
+    axios.post("http://localhost:3005/api/updatepassword",{"password":newPasswordRef.current.value, "email": emailRef.current.value, "OTP": otpRef.current.value})
+    .then((res)=>{
+      console.log(res.data);
+      
+      if (res.data === "Successfully updated!")
+      {
+        successAlert("Password reset successful", "Redirecting you to home page!");
+        //setAuthenticated(true);
+        const user = currentUser;
+        user.password = newPasswordRef.current.value;
+        console.log(user);
+        setCurrentUser(user);
+        localStorage.setItem(`Authenticated`, JSON.stringify("true"));  //setAuthenticated(true);
+        localStorage.setItem("UserData", JSON.stringify({"email": emailRef.current.value})); // store user password into localstorage
+
+        navigate("/app/home");
+      }
+      else
+      {
+        failedAlert("ERROR: Password reset failed", res.data);
+      }
+    })
   }
+
+    const sendOtp = () =>
+    {
+      
+      if (emailRef.current.value ==="" || newPasswordRef.current.value ==="" || newConfirmPasswordRef.current.value === "")
+      {
+        failedAlert("Input fields not filled up!", "Please check that you have filled up both the email and password fields!");
+        return;
+      }
+      //check for user signup inputs
+      if (newPasswordRef.current.value !== newConfirmPasswordRef.current.value )
+      {
+        
+        failedAlert("Passwords do not match!", "Please try again before generating OTP!");
+        newPasswordRef.current.value = "";
+        newConfirmPasswordRef.current.value = "";
+        return;
+      }
+  
+  
+      console.log(emailRef.current.value);
+      axios.post("http://localhost:3005/api/sendOTP",{"email": emailRef.current.value})
+      .then((res)=>{console.log(res.data);    
+      //clearInputFields();
+      successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
+      })
+      .catch((err)=>{console.log(err);
+      failedAlert("Something went wrong", "Please try again!")});
+  
+    }
+    
+  
+
 
 
 
@@ -75,7 +143,7 @@ const ForgotpasswordComponent = () => {
                 <Form.Group id="confirmpassword" className={styles.fields}>
                     <Form.Control type="password" required ref={newConfirmPasswordRef} placeholder="Confirm password"/>
                 </Form.Group>
-                <button type="button" className={"w-100 mt-1" + " " + styles["login-btn"]}>
+                <button type="button" className={"w-100 mt-1" + " " + styles["login-btn"]} onClick={sendOtp}>
                     Send OTP
                 </button>
                 <Form.Group id="otp" className={styles.fields}>
@@ -90,7 +158,7 @@ const ForgotpasswordComponent = () => {
                     backgroundColor: "#f95738",
                     boxShadow: "0px 0px 8px #ff9f1c", 
                   }}>
-                  Sign up
+                  Submit
                 </button>
               </Form>
               
