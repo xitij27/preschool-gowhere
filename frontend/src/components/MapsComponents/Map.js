@@ -72,7 +72,6 @@ const Map = () => {
                         <p className={styles.title}>Preschool information</p>
                         <p className={styles.para}><b>Center Code: </b>{selectedSchool['centre_code']}</p>
                         <p className={styles.para}><b>Center Name: </b>{selectedSchool['centre_name']}</p>
-                        <div className='btn' onClick={bookmarkPreschool} id ={styles.emailReport}>Bookmark Preschool</div>
                     </div>
                 </InfoWindow>
             )}

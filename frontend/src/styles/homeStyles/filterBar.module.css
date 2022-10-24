@@ -112,24 +112,12 @@
 }
 
 
-
-.inputMin
-{
-
-}
-.inputMax
-{
-
-}
-
-
-
-
 .rangeInput
 {
     position: relative;
 
 }
+
 .rangeInput input, .slider input
 {
     height: 5px;
@@ -138,11 +126,14 @@
     color: yellow;
 }
 
-
-
 input[type = range]::-webkit-slider-thumb
 {
     background-color: #FC575E;
  }
 
- 
+.bookmarkFilters
+{
+    max-width: 360px;
+    margin-bottom: 10px;
+}
+
