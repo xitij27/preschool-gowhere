@@ -33,13 +33,11 @@ import { useFilter } from '../../context/FilterContext';
 const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
     //context state variables
-    const { userLocation,basicCriterias,currentUser } = useAuth();
+    const { userLocation,currentUser } = useAuth();
     const {
-            filteredPreschools,setFilteredPreschools,criterias,setCriterias,
-            
+            filteredPreschools,setFilteredPreschools,criterias,setCriterias,   
             //criteria options for filterbars
             location,setLocation,
-            fees,setFees,
             minFees,setMinFees,
             maxFees,setMaxFees,
             foodInput,setFoodInput,
@@ -47,7 +45,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             serviceInput,setServiceInput,
             sparkInput,setSparkInput,
             transportInput,setTransportInput,
-            exOperatingHoursInput,setExOperatingHoursInput,
             citizenshipInput,setCitizenshipInput,
             levelInput,setLevelInput,
             typeServiceInput,setTypeServiceInput,
@@ -57,7 +54,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             secondlangTitle,setSecondlangTitle,
             sparkTitle,setSparkTitle,
             transportTitle,setTransportTitle,
-            exOperatingHoursInputTitle,setExOperatingHoursInputTitle,
             serviceTitle,setServiceTitle,
             citizenshipInputTitle,setCitizenshipInputTitle,
             levelInputTitle,setLevelInputTitle,
@@ -104,7 +100,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
 
     }
 
-
     const handleFilter =()=>
     {
         const criterias = 
@@ -123,7 +118,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             "long": userLocation.lng,
             "distance": location
         }
-        console.log(criterias);
         //check if user enabled location services
         if (criterias.lat === undefined || criterias.long === undefined)
         {
@@ -143,7 +137,77 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             setExpandFilterBar(!expandFilterBar);
             successAlertFast("Loading Filters", "Searching for the most suitable preschools for you!");
         })
-        .catch((err)=> console.log(err));
+        .catch((err)=> failedAlert("Something went wrong!"," Please try again!"));
+    }
+
+    // load saved filters and update filterbar
+    const getSavedFilters = () =>
+    {
+        axios.post("http://localhost:3005/api/getbookmark",{"email": currentUser.email})
+        .then((res)=>
+        {
+            //gets back past filters that are saved
+            if (res.data)
+            {
+                const criteriasSaved = res.data;
+                //set all inputs and titles to criterias data
+                setLocation(criteriasSaved.distance);
+                setMinFees(criteriasSaved.min_fee);
+                setMaxFees(criteriasSaved.max_fee);
+                setFoodInput(criteriasSaved.food);
+                setSecond_langInput(criteriasSaved.second_lang);
+                setServiceInput(criteriasSaved.service);
+                setSparkInput(criteriasSaved.spark);
+                setTransportInput(criteriasSaved.transport);
+                setCitizenshipInput(criteriasSaved.citizenship);
+                setLevelInput(criteriasSaved.level);
+                setTypeServiceInput(criteriasSaved.type_service);
+                
+                //set titles to display ui of saved criterias
+                setFoodTitle(criteriasSaved.food);
+                setSecondlangTitle(criteriasSaved.second_lang);
+                setSparkTitle(criteriasSaved.spark);
+                setTransportTitle(criteriasSaved.transport);
+                setServiceTitle(criteriasSaved.service);
+                setCitizenshipInputTitle(criteriasSaved.citizenship);
+                setLevelInputTitle(criteriasSaved.level);
+                setTypeServiceInputTitle(criteriasSaved.type_service);
+
+                successAlertFast("Successfully loaded saved filters!", "Proceed to use these filters to filter preschools!");
+
+
+            }
+            else
+            {
+                failedAlert("You have not saved any filters previously!");
+            }
+        })
+        .catch((err)=>{
+            failedAlert("Something went wrong!"," Please try again!");
+        })
+    }
+
+    // save current filters to the backend db
+    const saveFilters = () =>
+    {
+        const criterias = 
+        {
+            "food": foodInput ,"second_lang": second_langInput,"spark": sparkInput,
+            "transport": transportInput,"citizenship": citizenshipInput,"level": levelInput,
+            "max_fee": maxFees,"min_fee": minFees,"type_service": typeServiceInput,
+            "service": serviceInput,"lat": userLocation.lat,"long": userLocation.lng, "distance": location
+        }
+        const data = {"email": currentUser.email, "bookmark": criterias}
+        axios.post("http://localhost:3005/api/updatebookmark",data)
+        .then((res)=>
+        {
+            //updates db on the save filters
+            successAlertFast("Successfully saved filters!", "Load these filters whenever you come back!");
+
+        })
+        .catch((err)=>{
+            failedAlert("Something went wrong!"," Please try again!");
+        })
     }
 
 
@@ -164,6 +228,13 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         </div>
         {/* title "filter preschools" */}
         <div className={styles.title}>Filter Preschools</div>
+
+        {/* Loading and saving of bookmark filters */}
+        <div className={styles.bookmarkFilters}>
+            <div className = {styles.filterButton + " " + "btn"} onClick={getSavedFilters}>Use Saved Filters</div>
+        </div>
+
+
 
         {/* sliders for distance from home criteria */}
         <div className= {styles.slider}>
@@ -302,21 +373,6 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             </Dropdown>
         </div>
 
-
-        <div className={styles.criteria}>
-            <div className={styles.criteriaTitle}>Extended Operating Hours</div>
-            <Dropdown className={styles.dropdownbtn}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" style={dropdownbtn}>
-                    <div style={{display: "inline-block", marginRight: "15px"}}> {exOperatingHoursInputTitle}</div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu  className={styles.dropdownmenu} >
-                    <Dropdown.Item onClick={()=>{setExOperatingHoursInput("Yes");setExOperatingHoursInputTitle("Yes")}} >Yes</Dropdown.Item>
-                    <Dropdown.Item onClick={()=>{setExOperatingHoursInput("Default");setExOperatingHoursInputTitle("No Preference")}}  >No preference (Default) </Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-        </div>
-
         <div className={styles.criteria}>
             <div className={styles.criteriaTitle}>Spark Certified</div>
             <Dropdown className={styles.dropdownbtn}>
@@ -354,6 +410,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         
         <div className = {styles.filterButton + " " + "btn"} onClick={sendEmailReport}>Request Report</div>
 
+        <div className = {styles.filterButton + " " + "btn"} onClick={saveFilters}>Save Filters</div>
 
 
     </div>
