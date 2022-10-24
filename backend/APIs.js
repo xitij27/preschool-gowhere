@@ -13,12 +13,19 @@ const supabaseKey = 'REDACTED_SUPABASE_ANON_KEY';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const nodemailer = require('nodemailer');
-const transporter = nodemailer.createTransport({
+const transporter1 = nodemailer.createTransport({
+     service:'outlook365',
+    auth: {
+        user: 'wannabefaang@outlook.com',
+        pass: 'REDACTED_EMAIL_PASSWORD'
+    }
+     });
+const transporter2 = nodemailer.createTransport({
      service:'outlook365',
      auth: {
-     user: 'scared2compile@outlook.com',
-     pass: 'REDACTED_EMAIL_PASSWORD'
-     }
+             user: 'preschoolgowhere@outlook.com',
+             pass: 'REDACTED_EMAIL_PASSWORD'
+         }
      });
 OTPs = new Map();
 function generateOTP(email){
@@ -47,16 +54,16 @@ function convert_html(obj){
           html += '</table>';
      return html;
 }
-async function sendOTP(email){
+async function sendOTP2(email){
      OTPs.set(email,generateOTP(email));
         var mailOptions = {
-        from: 'scared2compile@outlook.com',
+        from: 'preschoolgowhere@outlook.com',
         to: email,
         subject: 'Your One-Time-Password for preschoolgowhere',
         text: 'Your OTP is '+OTPs.get(email)+'. This OTP is valid for 15 minutes. Please do not share with anyone. If you have logged in again, then do not use this OTP.'
         };
         return new Promise(function (resolve, reject){
-            transporter.sendMail(mailOptions, (err, info) => {
+            transporter2.sendMail(mailOptions, (err, info) => {
              if (err) {
                 console.log("error: ", err);
                 reject(err);
@@ -67,15 +74,16 @@ async function sendOTP(email){
             });
         });
 }
-async function sendinfo(email,data){
+async function sendOTP1(email){
+     OTPs.set(email,generateOTP(email));
         var mailOptions = {
-        from: 'scared2compile@outlook.com',
+        from: 'wannabefaang@outlook.com',
         to: email,
-        subject: 'Your filter results are here!',
-        html: data
+        subject: 'Your One-Time-Password for preschoolgowhere',
+        text: 'Your OTP is '+OTPs.get(email)+'. This OTP is valid for 15 minutes. Please do not share with anyone. If you have logged in again, then do not use this OTP.'
         };
         return new Promise(function (resolve, reject){
-            transporter.sendMail(mailOptions, (err, info) => {
+            transporter1.sendMail(mailOptions, (err, info) => {
              if (err) {
                 console.log("error: ", err);
                 reject(err);
@@ -86,6 +94,46 @@ async function sendinfo(email,data){
             });
         });
 }
+
+async function sendinfo2(email,data){
+     var mailOptions = {
+     from: 'preschoolgowhere@outlook.com',
+     to: email,
+     subject: 'Your filter results are here!',
+     html: data
+     };
+     return new Promise(function (resolve, reject){
+         transporter2.sendMail(mailOptions, (err, info) => {
+          if (err) {
+             console.log("error: ", err);
+             reject(err);
+         } else {
+              console.log(`Mail sent successfully!`);
+             resolve(info);
+          }
+         });
+     });
+}
+async function sendinfo1(email,data){
+     var mailOptions = {
+     from: 'wannabefaang@outlook.com',
+     to: email,
+     subject: 'Your filter results are here!',
+     html: data
+     };
+     return new Promise(function (resolve, reject){
+         transporter1.sendMail(mailOptions, (err, info) => {
+          if (err) {
+             console.log("error: ", err);
+             reject(err);
+         } else {
+              console.log(`Mail sent successfully!`);
+             resolve(info);
+          }
+         });
+     });
+}
+
 app.post('/api/signup', (req,res) => {
      password = req.body.password;
      email = req.body.email;
@@ -182,8 +230,8 @@ app.post('/api/updatepassword', (req,res) => {
                const {data} = await supabase.rpc('updatepassword', {user_email:email,
                user_password:password});
                console.log("succesful");
-               res.send("Successfully updated!");
-             
+               res.send("Sucessfully updated!");
+               }
                else{
                     console.log("OTP doesn't match");
                     res.send("Incorrect OTP. Try again.");
@@ -194,7 +242,12 @@ app.post('/api/updatepassword', (req,res) => {
 });
 app.post('/api/sendOTP', (req,res) => {
           (async () => {
-                    const {data} = await sendOTP(req.body.email);
+                    try{
+                         const {data} = await sendOTP1(req.body.email);
+                    }
+                    catch(e){
+                         const {data} = await sendOTP2(req.body.email);
+                    }
                     console.log(OTPs.get(req.body.email));
                     res.send("OTP has been sent to your email!")
            })();
@@ -222,8 +275,18 @@ app.post('/api/filteremail', (req, res) => {
          const data = await Filter();
          console.log(data);
          if(req.body.email != ""){
-          const emailtext = convert_html(data);
-          const {temp} = await sendinfo(req.body.email,emailtext);
+          if(data === null){
+               var emailtext = "No report generated, please change your filters!";
+          }
+          else{
+               var emailtext = convert_html(data);
+          }
+          try{
+               const {temp} = await sendinfo1(req.body.email,emailtext);
+          }
+          catch(e){
+               const {temp} = await sendinfo2(req.body.email,emailtext);
+          }
          }
          res.send(data);
      })();
@@ -253,8 +316,31 @@ app.post('/api/filteremail', (req, res) => {
          res.send(data);
      })();
  });
- 
- const port = process.env.PORT || 3000;
+ app.post('/api/updatebookmark', (req,res) => {
+     (async () => {
+          const {data} = await supabase.rpc('updatebookmark',{
+               user_bookmark:req.body.bookmark, //json 
+               user_email:req.body.email
+          });
+          res.send(data);
+      })();
+});
+app.post('/api/getbookmark',(req,res)=> {
+     const get_bookmark = async() => {
+          const {data} = await supabase
+          .from('Accounts')
+          .select('bookmark')
+          .eq('email',req.body.email)
+          return data;
+          };
+     (async () => {
+          const result = await get_bookmark();
+          console.log(result);
+          res.send(result[0].bookmark);
+     })();
+     
+})
+ const port = process.env.PORT || 3005;
  app.listen(port, () => console.log("Listening on: " + port));
  /*{
     "food":"Default",
