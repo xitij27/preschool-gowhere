@@ -20,7 +20,7 @@ import {useAuth} from "../../context/AuthContext";
 import {users} from  "../../utilities/userData" ;
 
 import axios from "axios";
-
+import { SERVER_URL } from "../../utilities/deployment";
 const LoginComponent = () => {
 
   //useContext variables
@@ -51,7 +51,7 @@ const LoginComponent = () => {
     const hash = CryptoJS.SHA256(passwordInput).toString();
     console.log(hash);
     console.log("hashed password is : ", hash);
-    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/login",{"email": emailInput,"password": hash})
+    axios.post(`${SERVER_URL}/api/login`,{"email": emailInput,"password": hash})
     .then(async(res)=>{
       console.log(res);
       if (res.data == "Succesfully logged in!")

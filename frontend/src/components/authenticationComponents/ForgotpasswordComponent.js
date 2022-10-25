@@ -14,7 +14,7 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 
 //import context
 import {useAuth} from "../../context/AuthContext";
-
+import { SERVER_URL } from './../../utilities/deployment';
 //custom styling objects
 const link = 
 {
@@ -67,7 +67,7 @@ const ForgotpasswordComponent = () => {
     const hash = CryptoJS.SHA256(newPasswordRef.current.value).toString();
     console.log("hashed password is : ", hash);
     
-    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/updatepassword",{"password": hash, "email": emailRef.current.value, "OTP": otpRef.current.value})
+    axios.post(`${SERVER_URL}/api/updatepassword`,{"password": hash, "email": emailRef.current.value, "OTP": otpRef.current.value})
     .then((res)=>{
       //console.log(res.data);
       
@@ -111,7 +111,7 @@ const ForgotpasswordComponent = () => {
   
   
       console.log(emailRef.current.value);
-      axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/sendOTP",{"email": emailRef.current.value})
+      axios.post(`${SERVER_URL}/api/sendOTP`,{"email": emailRef.current.value})
       .then((res)=>{console.log(res.data);    
       //clearInputFields();
       successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
