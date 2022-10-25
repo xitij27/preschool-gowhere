@@ -34,7 +34,7 @@
   transition: 0.5s;
 }
 .login-btn:hover{
-  border-radius: 20px;
+  border-radius: 23px;
   transition: 0.5s;
   background-color: #c41d25;
 }
