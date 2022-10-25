@@ -20,8 +20,6 @@ import {useAuth} from "../../context/AuthContext";
 import {users} from  "../../utilities/userData" ;
 
 import axios from "axios";
-import hmacSHA512 from 'crypto-js/hmac-sha512';
-
 
 const LoginComponent = () => {
 
@@ -57,7 +55,6 @@ const LoginComponent = () => {
       console.log(res);
       if (res.data == "Succesfully logged in!")
       {
-
         successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
         const user = currentUser;
         user.email = emailInput;

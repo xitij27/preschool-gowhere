@@ -18,6 +18,8 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 import {useAuth} from "../../context/AuthContext";
 
 import hmacSHA512 from 'crypto-js/hmac-sha512';
+import CryptoJS from "crypto-js";
+
 
 
 
@@ -58,8 +60,11 @@ const SignupComponent = () => {
       return;
     }
 
+    const hash = CryptoJS.SHA256(document.getElementById("password").value).toString();
+    console.log("hashed password is : ", hash);
+
     //post user data to backeend
-    axios.post("http://localhost:3005/api/signup",{"password": passwordRef.current.value,"email": emailRef.current.value, "OTP": otpRef.current.value})
+    axios.post("http://localhost:3005/api/signup",{"password": hash,"email": emailRef.current.value, "OTP": otpRef.current.value})
     .then((res)=>{
       console.log(res.data);
       
