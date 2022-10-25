@@ -8,6 +8,8 @@ const signupPage =
    display: "flex",
    flexDirection: "row",
    height: "100vh",
+   width: "100%",
+
 }
 
 

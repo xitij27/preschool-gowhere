@@ -55,7 +55,7 @@ const LoginComponent = () => {
       console.log(res);
       if (res.data == "Succesfully logged in!")
       {
-        successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
+        successAlert("Login Success", "Succesfully logged in!");
         const user = currentUser;
         user.email = emailInput;
         setCurrentUser(user);
@@ -81,7 +81,8 @@ const LoginComponent = () => {
     
   
   return (
-    <div className={styles.login}>
+    <div className={styles.login} >
+
       <motion.div
           initial={{ y: -250, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -92,9 +93,9 @@ const LoginComponent = () => {
             delay: 0.3,
           }}
       >
-      <Card className={styles["login-card"]}>
+      <Card className={styles["login-card"]} >
             <Card.Body>
-              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>Welcome Back</p>
+              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>Welcome</p>
               <p style={{ color: "#495057", fontSize: "17px",textAlign: "center", fontWeight: '500' }}>
                 Please enter your details
               </p>

@@ -15,6 +15,8 @@ import {useFilter} from "../context/FilterContext";
 
 
 import { successAlert, failedAlert } from "../helpers/sweetalerthelper";
+// import { successAlert, failedAlert } from "../../src/images/logoPreschool.png";
+
 
 
 const NavigationBar = () => {
@@ -22,12 +24,18 @@ const NavigationBar = () => {
   const {setAuthenticated,currentUser} = useAuth();
   const {setFilteredPreschools} = useFilter();
 
+
   
   return (
 
     <Navbar style ={{backgroundColor: "#FC575E" , paddingTop:"10px", paddingBottom: "10px", paddingLeft: "20px", paddingRight: "40px"}} expand="lg">
         <Container>
-          <Navbar.Brand className='logofont-navbar' style ={{ textDecoration: "none", fontWeight: "600", color:  "white", fontSize: "24px", marginRight: "45px"}}>PreSchool GoWhere</Navbar.Brand>
+          
+          <div className='logoBox'>
+            <div className='logoImage'></div>
+            <Navbar.Brand className='logofont-navbar' style ={{ textDecoration: "none", fontWeight: "600", color:  "white", fontSize: "24px", marginRight: "45px"}}>PreSchool GoWhere</Navbar.Brand>
+          </div>
+
           
           <Navbar.Toggle aria-controls="navbarScroll"/>
               <Navbar.Collapse id="navbarScroll" >

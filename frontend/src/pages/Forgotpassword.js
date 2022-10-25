@@ -7,6 +7,8 @@ const ForgotpasswordPage =
    display: "flex",
    flexDirection: "row",
    height: "100vh",
+   width: "100%",
+
 }
 
 const Forgotpassword = () => {

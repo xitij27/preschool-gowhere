@@ -151,3 +151,41 @@
 {
     font-size: 14px;
 }
+
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .title
+    {
+        font-size:28px;
+        font-weight: 700;
+        margin-top: 10px;
+    
+    }
+
+    .para
+    {
+        font-size: 18px;
+        text-align: center;
+        padding: 10px 20px;
+
+    }
+
+    .banner
+    {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+
+    .buttons
+    {
+        width: 95%;
+    }
+    
+    .button, .button-outline
+    {
+        font-size: 15px;
+    }
+    
+  }

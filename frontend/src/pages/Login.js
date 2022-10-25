@@ -10,6 +10,7 @@ const loginPage =
    display: "flex",
    flexDirection: "row",
    height: "100vh",
+   width: "100%",
 }
 
 
@@ -24,9 +25,7 @@ const Login = () => {
 
           <div className = "authentication-card">
               <div style={{position: "absolute", top: "25px","zIndex": 10}} className ="logofont">PreSchool <br></br> GoWhere</div>
-              {/* <div className = "logofont">PreSchool </div>
-              <div className = "logofont">GoWhere </div> */}
-              <LoginComponent />
+              <LoginComponent  />
           </div>
           <div className='side-image'>
               <div className='side-image-background'></div>

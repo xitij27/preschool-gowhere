@@ -9,6 +9,8 @@ const successAlert = (title, text) => {
     showCloseButton: false,
     showConfirmButton: false,
     timer: 2000,
+    width: "23em",
+    position: "center",
     timerProgressBar: true,
   });
 };
@@ -22,6 +24,10 @@ const successAlertFast = (title, text) => {
     showCloseButton: false,
     showConfirmButton: false,
     timer: 1000,
+    width: "23em",
+    position: "center",
+
+
     timerProgressBar: true,
   });
 };
