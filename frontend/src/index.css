@@ -120,7 +120,7 @@ code {
   
   .authentication-card
   {
-    width: 100%;
+    width: 100wh;
     margin-left: auto;
     margin-right: auto;
   }
@@ -130,7 +130,6 @@ code {
   }
   .sweetalert
   {
-    margin-right: 30px;
     width: 300px !important;
     height: 300px !important;
   }
