@@ -1,11 +1,10 @@
 
 // import css styles
 import styles from "../../styles/authenticationStyles/forgotpassword.module.css";
-
 import React, { useRef,useState } from "react";
 import axios from "axios";
 import { Form, Button, Alert, Card } from "react-bootstrap";
-
+import CryptoJS from "crypto-js";
 import { motion } from "framer-motion";
 
 // react routing import
@@ -64,10 +63,13 @@ const ForgotpasswordComponent = () => {
     console.log("Pwd -> ",newPasswordRef.current.value);
     console.log("CfmPwd -> ",newConfirmPasswordRef.current.value);
 
-    //post user data to backeend
-    axios.post("http://localhost:3005/api/updatepassword",{"password":newPasswordRef.current.value, "email": emailRef.current.value, "OTP": otpRef.current.value})
+    //post user data to backend
+    const hash = CryptoJS.SHA256(document.getElementById("password").value).toString();
+    console.log("hashed password is : ", hash);
+    
+    axios.post("http://localhost:3005/api/updatepassword",{"password": hash, "email": emailRef.current.value, "OTP": otpRef.current.value})
     .then((res)=>{
-      console.log(res.data);
+      //console.log(res.data);
       
       if (res.data === "Successfully updated!")
       {

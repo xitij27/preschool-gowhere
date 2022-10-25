@@ -3,7 +3,7 @@ import { useJsApiLoader,GoogleMap, Marker, InfoWindow } from '@react-google-maps
 
 //sweetalert notification
 import { successAlert, failedAlert, successAlertFast } from "../../helpers/sweetalerthelper";
-
+import { AiTwotoneHome } from 'react-icons/ai';
 // import css styles
 import styles from "../../styles/mapStyles/map.module.css";
 
@@ -51,11 +51,12 @@ const Map = () => {
 
     return (
         <div style={{height: "100vh", maxWidth: "100vw"}}>
-            <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "100%"}}>
+            <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "95%"}} options={{gestureHandling:'greedy', disableDefaultUI:true}}>
                 {console.log(filteredPreschools)}
                 {(filteredPreschools)? filteredPreschools.map((preschool,index)=>{
                     return(
                         <div className='preschool' key={index}>
+                            {/*<Marker position={{lat: 1.352 , lng:103.820 }} icon={{path: AiTwotoneHome.icon[4]}}/>*/}
                             <Marker key={index} position={{lat: preschool.latitude,lng: preschool.longitude}} 
                             onClick={()=>{
                                 setSelectedSchool(preschool);
