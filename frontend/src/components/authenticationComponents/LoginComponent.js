@@ -50,7 +50,7 @@ const LoginComponent = () => {
     const passwordInput = passwordRef.current.value;
     const hash = CryptoJS.SHA256(document.getElementById("password").value).toString();
     console.log("hashed password is : ", hash);
-    axios.post("http://localhost:3005/api/login",{"email": emailInput,"password": hash})
+    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/login",{"email": emailInput,"password": hash})
     .then(async(res)=>{
       console.log(res);
       if (res.data == "Succesfully logged in!")
@@ -94,7 +94,7 @@ const LoginComponent = () => {
       >
       <Card className={styles["login-card"]}>
             <Card.Body>
-              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>Welcome Back</p>
+              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>  Welcome </p>
               <p style={{ color: "#495057", fontSize: "17px",textAlign: "center", fontWeight: '500' }}>
                 Please enter your details
               </p>
@@ -114,7 +114,6 @@ const LoginComponent = () => {
                   </Link>
                 </p>
                 <button
-                
                   disabled={loading}
                   type="submit"
                   className={"w-100 mt-1" + " " + styles["login-btn"]}

@@ -13,7 +13,7 @@ import { useFilter } from '../../context/FilterContext';
 import axios from 'axios';
 
 //api key 
-const apiKey ='';
+const apiKey ='REDACTED_GOOGLE_MAPS_API_KEY';
 
 //locations
 const centerSingapore = {lat: 1.352 , lng:103.820 };
