@@ -28,8 +28,13 @@
     border: 0px;
     color: white;
     margin:15px 0px;
+    transition: 0.5s;
 }
-
+.login-btn:hover{
+    border-radius: 20px;
+    transition: 0.5s;
+    background-color: #c41d25;
+}
 .logout-btn-icon {
     margin-left: 4px;
     margin-bottom: 1px;

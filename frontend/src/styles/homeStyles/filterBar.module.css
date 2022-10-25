@@ -55,13 +55,16 @@
     padding-bottom: 8px;
     margin-top: 20px;
     min-width: 100%;
+    transition: 0.5s;
 }
 
 
 .filterButton:hover
 {
-    background-color: #FC575E;
+    background-color: #ba242c;
     color: white;
+    border-radius: 23px;
+    transition: 0.5s;
 }
 
 .fees

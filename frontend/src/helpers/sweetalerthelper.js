@@ -12,6 +12,8 @@ const successAlert = (title, text) => {
     width: "23em",
     position: "center",
     timerProgressBar: true,
+    customClass: "sweetalert",
+
   });
 };
 
@@ -26,6 +28,8 @@ const successAlertFast = (title, text) => {
     timer: 1000,
     width: "23em",
     position: "center",
+    customClass: "sweetalert",
+
 
 
     timerProgressBar: true,
@@ -42,6 +46,11 @@ const failedAlert = (title, text) => {
     allowEnterKey: true,
     timer: 1500,
     timerProgressBar: true,
+    width: "23em",
+    position: "center",
+    customClass: "sweetalert",
+
+
   });
 };
 
@@ -78,6 +87,11 @@ const warningAlert = (title, text) => {
     allowEnterKey: true,
     timer: 1500,
     timerProgressBar: true,
+    width: "23em",
+    position: "center",
+    customClass: "sweetalert",
+
+
   });
 };
 export { successAlert, successAlertFast, failedAlert, resetInfoAlert, warningAlert, infoAlert };

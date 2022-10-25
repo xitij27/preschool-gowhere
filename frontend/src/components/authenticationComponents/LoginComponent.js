@@ -48,14 +48,15 @@ const LoginComponent = () => {
     //Authenticate user details with backend 
     const emailInput = emailRef.current.value;
     const passwordInput = passwordRef.current.value;
-    const hash = CryptoJS.SHA256(document.getElementById("password").value).toString();
+    const hash = CryptoJS.SHA256(passwordInput).toString();
+    console.log(hash);
     console.log("hashed password is : ", hash);
-    axios.post("http://localhost:3005/api/login",{"email": emailInput,"password": hash})
+    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/login",{"email": emailInput,"password": hash})
     .then(async(res)=>{
       console.log(res);
       if (res.data == "Succesfully logged in!")
       {
-        successAlert("Login Success", "Succesfully logged in!");
+        successAlert("Login Success", "Succesfully logged in! Redirecting you to home page");
         const user = currentUser;
         user.email = emailInput;
         setCurrentUser(user);
@@ -81,8 +82,7 @@ const LoginComponent = () => {
     
   
   return (
-    <div className={styles.login} >
-
+    <div className={styles.login}>
       <motion.div
           initial={{ y: -250, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -93,9 +93,9 @@ const LoginComponent = () => {
             delay: 0.3,
           }}
       >
-      <Card className={styles["login-card"]} >
+      <Card className={styles["login-card"]}>
             <Card.Body>
-              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>Welcome</p>
+              <p className="mb-1" style={{fontSize:  "46px", fontWeight: "650", textAlign: "center"}}>  Welcome </p>
               <p style={{ color: "#495057", fontSize: "17px",textAlign: "center", fontWeight: '500' }}>
                 Please enter your details
               </p>
@@ -105,7 +105,7 @@ const LoginComponent = () => {
                   <Form.Label><p className={styles.title}>Email</p></Form.Label>
                   <Form.Control type="email" required ref={emailRef} />
                 </Form.Group>
-                <Form.Group id="password" className={styles.fields}>
+                <Form.Group  className={styles.fields}>
                   <Form.Label><p className={styles.title} >Password</p></Form.Label>
                   <Form.Control type="password" required ref={passwordRef} />
                 </Form.Group>
@@ -115,7 +115,6 @@ const LoginComponent = () => {
                   </Link>
                 </p>
                 <button
-                
                   disabled={loading}
                   type="submit"
                   className={"w-100 mt-1" + " " + styles["login-btn"]}

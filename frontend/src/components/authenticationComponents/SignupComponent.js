@@ -59,11 +59,11 @@ const SignupComponent = () => {
       return;
     }
 
-    const hash = CryptoJS.SHA256(document.getElementById("password").value).toString();
+    const hash = CryptoJS.SHA256(passwordRef.current.value).toString();
     console.log("hashed password is : ", hash);
 
     //post user data to backeend
-    axios.post("http://localhost:3005/api/signup",{"password": hash,"email": emailRef.current.value, "OTP": otpRef.current.value})
+    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/signup",{"password": hash,"email": emailRef.current.value, "OTP": otpRef.current.value})
     .then((res)=>{
       console.log(res.data);
       
@@ -110,7 +110,7 @@ const SignupComponent = () => {
 
 
     console.log(emailRef.current.value);
-    axios.post("http://localhost:3005/api/sendOTP",{"email": emailRef.current.value})
+    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/sendOTP",{"email": emailRef.current.value})
     .then((res)=>{console.log(res.data);    
     //clearInputFields();
     successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");
@@ -143,7 +143,7 @@ const SignupComponent = () => {
                   <Form.Label><p className={styles.title}>Email</p></Form.Label>
                   <Form.Control type="email" required ref={emailRef} />
                 </Form.Group>
-                <Form.Group id="password" className={styles.fields}>
+                <Form.Group id="passwordsignup" className={styles.fields}>
                   <Form.Label><p className={styles.title} >Password</p></Form.Label>
                   <Form.Control type="password" required ref={passwordRef} />
                 </Form.Group>
@@ -154,7 +154,7 @@ const SignupComponent = () => {
                 <Form.Group id={styles.otp} className={styles.fields}>
                   <Form.Label><p className={styles.title} >Enter OTP</p></Form.Label>
                   <Form.Control required ref={otpRef}/>
-                  <div onClick={sendOtp} className="btn" id={styles.otpBtn} >Generate OTP</div>
+                  <div onClick={sendOtp} className="btn" id={styles.otpBtn} >Send OTP</div>
                 </Form.Group>
 
                 <button
