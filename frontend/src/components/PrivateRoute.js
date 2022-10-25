@@ -12,4 +12,5 @@ export default function PrivateRoute() {
 
   const authenticated = JSON.parse(localStorage.getItem(`Authenticated`));
   return (authenticated === "true") ? <Outlet /> : <Navigate to="/home" />;
+  
 }

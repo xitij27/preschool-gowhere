@@ -60,8 +60,6 @@ export const FilterProvider = ({ children }) => {
         levelInput,setLevelInput,
         typeServiceInput,setTypeServiceInput,
 
-
-
         //criteria titles for ui purposes
         foodTitle,setFoodTitle,
         secondlangTitle,setSecondlangTitle,

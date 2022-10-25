@@ -18,10 +18,9 @@ const Home = () => {
 
 
   return (
-    <>
-      <NavigationBar />
-
-      <div className='home' style={{height: "95vh",width: "100%", position: "relative"}}>
+    <div className={styles.page}>
+      <NavigationBar style={{position: "absolute",zIndex: "10000"}} />
+      <div className='home' style={{width: "100%", position: "relative"}}>
 
           {/* Expandable Menu bar icon */}
           <div onClick={()=> setExpandFilterBar(!expandFilterBar)} className={styles.expandFilter} style={{position: "absolute", top: "10vh", left: "12px", zIndex: "100", backgroundColor :"#FC575E", padding: "5px", borderRadius: "4px"}}>
@@ -44,7 +43,7 @@ const Home = () => {
 
 
       </div>
-    </>
+    </div>
   )
 }
 

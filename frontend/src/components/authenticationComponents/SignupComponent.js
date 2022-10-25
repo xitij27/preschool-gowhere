@@ -17,6 +17,9 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 //import context
 import {useAuth} from "../../context/AuthContext";
 
+import hmacSHA512 from 'crypto-js/hmac-sha512';
+
+
 
 const SignupComponent = () => {
 

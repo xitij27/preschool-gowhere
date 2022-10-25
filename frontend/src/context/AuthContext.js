@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         "citizenship": "SC",
         "level": "Kindergarten 1 (5 yrs old)",
         "type_service": "Full Day",
+        
     }
     ); //basic criterias will be set by user once user signs up
 
