@@ -33,7 +33,7 @@ const NavigationBar = () => {
           
           <div className='logoBox'>
             <div className='logoImage'></div>
-            <Navbar.Brand className='logofont-navbar' style ={{ textDecoration: "none", fontWeight: "600", color:  "white", fontSize: "24px", marginRight: "45px"}}>PreSchool GoWhere</Navbar.Brand>
+            <Navbar.Brand className='logofont-navbar' style ={{ textDecoration: "none", fontWeight: "600", color:  "white", fontSize: "20px"}}>PreSchool GoWhere</Navbar.Brand>
           </div>
 
           
