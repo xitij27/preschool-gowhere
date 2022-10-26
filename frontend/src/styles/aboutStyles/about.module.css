@@ -181,6 +181,7 @@
     .buttons
     {
         width: 95%;
+        display: block;
     }
     
     .button, .button-outline
