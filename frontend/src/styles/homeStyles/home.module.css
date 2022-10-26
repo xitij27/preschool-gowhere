@@ -29,10 +29,23 @@
   
 }
 
-
+.expandFilter{
+    cursor: pointer;
+    position:absolute;
+    top: 2vh;
+    left: 2%; 
+    z-index: 100; 
+    background-color :#FC575E; 
+    padding: 5px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
 .expandFilter:hover
 {
     cursor: pointer;
+    background-color: rgb(155, 14, 14);
+    transform: rotate(90deg);
+    transition: 0.3s;
 }
 
 .filter

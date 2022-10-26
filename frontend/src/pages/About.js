@@ -1,6 +1,6 @@
 // About page: describes the purpose and services of our application to the user, and provide a contact us form
 import React from 'react'
-
+import { Link, useNavigate } from "react-router-dom";
 // import css styles
 import styles from "../styles/aboutStyles/about.module.css";
 
@@ -28,8 +28,16 @@ const About = () => {
                     <div className={styles.para}>Every child is different. We cater to your  preferences
                     and only recommend you the most suitable ones!</div>
                     <div className={styles.buttons}>
-                        <div className={"btn" + " " + styles.button}>Get Started</div>
-                        <div className={"btn" + " " + styles["button-outline"]}>About us</div>
+                        <Link to="/app/home">
+                            <div className={"btn" + " " + styles.button}>                                
+                                    Get Started👍                                
+                            </div>
+                        </Link>
+                        <a href="https://github.com/CZ3002-Advanced-Software-Egineeringg/Frontend/tree/frontend1">
+                        <div className={"btn" + " " + styles["button-outline"]}>
+                            View code❤️
+                        </div>
+                        </a>
                     </div>
                 </div>
             </motion.div>
