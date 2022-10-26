@@ -14,7 +14,7 @@ import {useAuth} from "../context/AuthContext";
 import {useFilter} from "../context/FilterContext";
 
 
-import { successAlert, failedAlert } from "../helpers/sweetalerthelper";
+import { successAlert, failedAlert, successAlertFast } from "../helpers/sweetalerthelper";
 // import { successAlert, failedAlert } from "../../src/images/logoPreschool.png";
 
 
@@ -51,7 +51,7 @@ const NavigationBar = () => {
                   {
                     setAuthenticated(false);
                     setFilteredPreschools(null);
-                    successAlert("Logged out successfully", "Return to where you were by logging back in!")
+                    successAlertFast("Logged out successfully", "Return to where you were by logging back in!");
                     localStorage.setItem("Authenticated", JSON.stringify("false"));  //setAuthenticated(true);
                       
                   }} 

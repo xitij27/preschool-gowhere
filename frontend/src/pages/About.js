@@ -64,8 +64,8 @@ const About = () => {
                 <div className={styles.box}>
                     <div id ={styles.box3headerimage}></div>
                     <div className={styles.boxcontent}>
-                        <div className={styles["box-title"]}>Bookmarks</div>
-                        <div className={styles["box-para"]}>Bookmark and save any of the preschools you are interested in, and feel free to come revisit them anytime you want!</div>
+                        <div className={styles["box-title"]}>Save Filters</div>
+                        <div className={styles["box-para"]}>Save and bookmark your filters so that you will be able to use them again anytime you want!</div>
                     </div>
 
                     
