@@ -18,6 +18,7 @@ import { successAlert, failedAlert } from "../../helpers/sweetalerthelper";
 import {useAuth} from "../../context/AuthContext";
 
 import CryptoJS from "crypto-js";
+import { SERVER_URL } from "../../utilities/deployment";
 
 
 
@@ -63,8 +64,12 @@ const SignupComponent = () => {
     console.log("hashed password is : ", hash);
 
     //post user data to backeend
+<<<<<<< HEAD
     const emailInput = (emailRef.current.value).toLowerCase();
     axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/signup",{"password": hash,"email": emailInput, "OTP": otpRef.current.value})
+=======
+    axios.post(`${SERVER_URL}/api/signup`,{"password": hash,"email": emailRef.current.value, "OTP": otpRef.current.value})
+>>>>>>> 4745b4062544cb3633b7eeb286c32242b9198984
     .then((res)=>{
       console.log(res.data);
       
@@ -111,7 +116,7 @@ const SignupComponent = () => {
 
 
     console.log(emailRef.current.value);
-    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/sendOTP",{"email": emailRef.current.value})
+    axios.post(`${SERVER_URL}/api/sendOTP`,{"email": emailRef.current.value})
     .then((res)=>{console.log(res.data);    
     //clearInputFields();
     successAlert("OTP successfully sent!", "Please enter the one time password that is sent to your email!");

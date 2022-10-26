@@ -25,7 +25,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import { Button, DropdownButton } from "react-bootstrap";
 import axios from "axios";
-
+import { SERVER_URL } from "../../utilities/deployment";
 
 import { useFilter } from '../../context/FilterContext';
 
@@ -91,7 +91,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         //call backend api to send email report
         const bodyData = criterias;
         bodyData.email = currentUser.email;
-        axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/filteremail",bodyData)
+        axios.post(`${SERVER_URL}/api/filteremail`,bodyData)
         .then((res)=> {
             console.log(res.data);
             successAlertFast("Email report successfully sent!", `Full Report of preschool sent to : ${currentUser.email}! `)
@@ -126,7 +126,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
         }
 
         //post request to backend for filter functionality
-        axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/filter",criterias)
+        axios.post(`${SERVER_URL}/api/filter`,criterias)
         .then((res)=>{
             //console.log(res.data);
             setCriterias(criterias);
@@ -143,7 +143,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
     // load saved filters and update filterbar
     const getSavedFilters = () =>
     {
-        axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/getbookmark",{"email": currentUser.email})
+        axios.post(`${SERVER_URL}/api/getbookmark`,{"email": currentUser.email})
         .then((res)=>
         {
             //gets back past filters that are saved
@@ -198,7 +198,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             "service": serviceInput,"lat": userLocation.lat,"long": userLocation.lng, "distance": location
         }
         const data = {"email": currentUser.email, "bookmark": criterias}
-        axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/updatebookmark",data)
+        axios.post("${SERVER_URL}/api/updatebookmark",data)
         .then((res)=>
         {
             //updates db on the save filters
