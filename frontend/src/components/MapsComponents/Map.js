@@ -51,7 +51,7 @@ const Map = () => {
 
     return (
         <div style={{height: "100vh", maxWidth: "100vw"}}>
-            <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "95%"}} options={{gestureHandling:'greedy', disableDefaultUI:true}}>
+            <GoogleMap center={centerSingapore} zoom={12} mapContainerStyle={{width: "100%", height: "100%"}} options={{gestureHandling:'greedy', disableDefaultUI:true}}>
                 {console.log(filteredPreschools)}
                 {(filteredPreschools)? filteredPreschools.map((preschool,index)=>{
                     return(
