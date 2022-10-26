@@ -68,11 +68,7 @@ const ForgotpasswordComponent = () => {
     const hash = CryptoJS.SHA256(newPasswordRef.current.value).toString();
     console.log("hashed password is : ", hash);
     
-<<<<<<< HEAD
-    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/updatepassword",{"password": hash, "email": emailInput, "OTP": otpRef.current.value})
-=======
     axios.post(`${SERVER_URL}/api/updatepassword`,{"password": hash, "email": emailRef.current.value, "OTP": otpRef.current.value})
->>>>>>> 4745b4062544cb3633b7eeb286c32242b9198984
     .then((res)=>{
       //console.log(res.data);
       

@@ -64,12 +64,7 @@ const SignupComponent = () => {
     console.log("hashed password is : ", hash);
 
     //post user data to backeend
-<<<<<<< HEAD
-    const emailInput = (emailRef.current.value).toLowerCase();
-    axios.post("https://us-central1-lucky-sphinx-365408.cloudfunctions.net/app/api/signup",{"password": hash,"email": emailInput, "OTP": otpRef.current.value})
-=======
     axios.post(`${SERVER_URL}/api/signup`,{"password": hash,"email": emailRef.current.value, "OTP": otpRef.current.value})
->>>>>>> 4745b4062544cb3633b7eeb286c32242b9198984
     .then((res)=>{
       console.log(res.data);
       
