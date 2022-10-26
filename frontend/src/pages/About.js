@@ -33,7 +33,7 @@ const About = () => {
                                     Get Started👍                                
                             </div>
                         </Link>
-                        <a href="https://github.com/CZ3002-Advanced-Software-Egineeringg/Frontend/tree/frontend1">
+                        <a href="https://github.com/orgs/CZ3002-Advanced-Software-Egineeringg/repositories">
                         <div className={"btn" + " " + styles["button-outline"]}>
                             View code❤️
                         </div>
