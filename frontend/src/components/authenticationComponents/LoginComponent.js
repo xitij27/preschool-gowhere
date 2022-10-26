@@ -46,7 +46,7 @@ const LoginComponent = () => {
     setError("");
 
     //Authenticate user details with backend 
-    const emailInput = emailRef.current.value;
+    const emailInput = (emailRef.current.value).toLowerCase();
     const passwordInput = passwordRef.current.value;
     const hash = CryptoJS.SHA256(passwordInput).toString();
     console.log(hash);
