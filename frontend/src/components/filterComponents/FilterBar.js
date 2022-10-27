@@ -198,7 +198,7 @@ const FilterBar = ({expandFilterBar, setExpandFilterBar}) => {
             "service": serviceInput,"lat": userLocation.lat,"long": userLocation.lng, "distance": location
         }
         const data = {"email": currentUser.email, "bookmark": criterias}
-        axios.post("${SERVER_URL}/api/updatebookmark",data)
+        axios.post(`${SERVER_URL}/api/updatebookmark`,data)
         .then((res)=>
         {
             //updates db on the save filters
