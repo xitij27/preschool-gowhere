@@ -11,9 +11,10 @@ import styles from "../../styles/mapStyles/map.module.css";
 import {useAuth} from "../../context/AuthContext";
 import { useFilter } from '../../context/FilterContext';
 import axios from 'axios';
+import { GOOGLE_MAPS_API_KEY } from '../../utilities/deployment';
 
 //api key 
-const apiKey ='REDACTED_GOOGLE_MAPS_API_KEY';
+const apiKey = `${GOOGLE_MAPS_API_KEY}`;
 
 //locations
 const centerSingapore = {lat: 1.352 , lng:103.820 };
