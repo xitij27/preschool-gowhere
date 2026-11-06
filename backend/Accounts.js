@@ -5,8 +5,8 @@ app.use(express.json());
 app.use(cors())
 
 const {createClient} = require('@supabase/supabase-js');
-const supabaseUrl = 'https://gjzcfefmcwhswjobgdqy.supabase.co';
-const supabaseKey = 'REDACTED_SUPABASE_ANON_KEY';
+const supabaseUrl = process.env.SUPABASE_URL;  // see .env.example
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 OTPs = new Map();
@@ -25,12 +25,12 @@ async function sendEmail(email){
         var transporter = nodemailer.createTransport({
         service:'outlook365',
         auth: {
-        user: 'scared2compile@outlook.com',
-        pass: 'REDACTED_EMAIL_PASSWORD'
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
         }
         });
         var mailOptions = {
-        from: 'scared2compile@outlook.com',
+        from: process.env.EMAIL_USER,
         to: email,
         subject: 'Your One-Time-Password for login to preschoolgowhere',
         text: 'Your OTP is '+OTPs.get(email)+'. This OTP is valid for 15 minutes. Please do not share with anyone. If you have logged in again, then do not use this OTP.'

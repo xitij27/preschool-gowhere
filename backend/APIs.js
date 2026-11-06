@@ -8,23 +8,32 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 const {createClient} = require('@supabase/supabase-js');
-const supabaseUrl = 'https://gjzcfefmcwhswjobgdqy.supabase.co';
-const supabaseKey = 'REDACTED_SUPABASE_ANON_KEY';
+// Credentials come from the environment; see .env.example.
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY;
+if (!supabaseUrl || !supabaseKey) {
+     console.error('SUPABASE_URL and SUPABASE_ANON_KEY must be set. Copy .env.example to .env and fill it in.');
+     process.exit(1);
+}
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// Mail goes out through the primary account; the fallback is tried if that fails.
 const nodemailer = require('nodemailer');
+const MAIL_SERVICE = process.env.EMAIL_SERVICE || 'outlook365';
+const MAIL_PRIMARY = process.env.EMAIL_USER;
+const MAIL_FALLBACK = process.env.EMAIL_FALLBACK_USER || process.env.EMAIL_USER;
 const transporter1 = nodemailer.createTransport({
-     service:'outlook365',
+     service: MAIL_SERVICE,
     auth: {
-        user: 'wannabefaang@outlook.com',
-        pass: 'REDACTED_EMAIL_PASSWORD'
+        user: MAIL_PRIMARY,
+        pass: process.env.EMAIL_PASS
     }
      });
 const transporter2 = nodemailer.createTransport({
-     service:'outlook365',
+     service: MAIL_SERVICE,
      auth: {
-             user: 'preschoolgowhere@outlook.com',
-             pass: 'REDACTED_EMAIL_PASSWORD'
+             user: MAIL_FALLBACK,
+             pass: process.env.EMAIL_FALLBACK_PASS || process.env.EMAIL_PASS
          }
      });
 OTPs = new Map();
@@ -57,7 +66,7 @@ function convert_html(obj){
 async function sendOTP2(email){
      OTPs.set(email,generateOTP(email));
         var mailOptions = {
-        from: 'preschoolgowhere@outlook.com',
+        from: MAIL_FALLBACK,
         to: email,
         subject: 'Your One-Time-Password for preschoolgowhere',
         text: 'Your OTP is '+OTPs.get(email)+'. This OTP is valid for 15 minutes. Please do not share with anyone. If you have logged in again, then do not use this OTP.'
@@ -77,7 +86,7 @@ async function sendOTP2(email){
 async function sendOTP1(email){
      OTPs.set(email,generateOTP(email));
         var mailOptions = {
-        from: 'wannabefaang@outlook.com',
+        from: MAIL_PRIMARY,
         to: email,
         subject: 'Your One-Time-Password for preschoolgowhere',
         text: 'Your OTP is '+OTPs.get(email)+'. This OTP is valid for 15 minutes. Please do not share with anyone. If you have logged in again, then do not use this OTP.'
@@ -97,7 +106,7 @@ async function sendOTP1(email){
 
 async function sendinfo2(email,data){
      var mailOptions = {
-     from: 'preschoolgowhere@outlook.com',
+     from: MAIL_FALLBACK,
      to: email,
      subject: 'Your filter results are here!',
      html: data
@@ -116,7 +125,7 @@ async function sendinfo2(email,data){
 }
 async function sendinfo1(email,data){
      var mailOptions = {
-     from: 'wannabefaang@outlook.com',
+     from: MAIL_PRIMARY,
      to: email,
      subject: 'Your filter results are here!',
      html: data
@@ -340,7 +349,7 @@ app.post('/api/getbookmark',(req,res)=> {
      })();
      
 })
- const port = 3005;
+ const port = process.env.PORT || 3005;
  app.listen(port, () => console.log("Listening on: " + port));
  /*{
     "food":"Default",
